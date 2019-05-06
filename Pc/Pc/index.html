@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <link rel="stylesheet" href="css/universal.css">
+  <link rel="stylesheet" href="css/index.css">
+  <script src="js/jquery.min.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <title>Document</title>
+</head>
+<body>
+       <!--商品分类菜单-->
+  <div>
+      <div class="feilei">
+        <div class="feilei_nav">
+          <div class="feilei_nav_tu">
+              <h3>全部商品分类</h3>
+              <div class="feilei_nav_tu_biao">
+                <ul>
+                  <li><span><a href="#">川渝四大腌菜</a></span></li>
+                  <li><span><a href="#">山珍系列</a></span></li>
+                  <li><span><a href="#">肉食系列</a></span></li>
+                  <li><span><a href="#">零食系列</a></span></li>
+                  <li><span><a href="#">养生饮品</a></span></li>
+                </ul>
+              </div>
+          </div>
+          <ul class="feilei_nav_list">
+            <li>
+              <a href="">首页</a>
+            </li>
+            <li>
+              <a href="">限时抢购</a>
+            </li>
+            <li>
+              <a href="">热卖商品</a>
+            </li>
+            <li>
+              <a href="">会员中心</a>
+            </li>
+            <li>
+              <a href="">联系我们</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+  </div>
+  <script>
+      
+  </script>
+  <!--焦点轮播图 -->
+  <div class="focus">
+    <div id="demo" class="carousel" data-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="public/image/e49e3ec9a9aba220890e5ea428e3a1e9.jpg"/>
+            </div>
+            <div class="carousel-item">
+                <img src="public/image/d8d3c7f5d4511038e8f74af1653998e0.jpg"/>
+            </div>
+            <div class="carousel-item">
+                <img src="public/image/2e7a549f072d32aa113464938cc1a3d6.jpg"/>
+            </div>
+            <div class="carousel-item">
+              
+                <img src="public/image/b7353a4299f98fa561d854b9ec3ab098.jpg"/>
+            </div>  
+            <div class="carousel-item">
+                <img src="public/image/1ad72d3f7e326d738d8e9e8632f5dd64.jpg"/>
+            </div>  
+        </div>
+        <ul class="carousel-indicators">
+            <li class="active" data-slide-to="0" data-target="#demo"></li>
+            <li data-slide-to="1" data-target="#demo"></li>
+            <li data-slide-to="2" data-target="#demo"></li>
+            <li data-slide-to="3" data-target="#demo"></li>
+            <li data-slide-to="4" data-target="#demo"></li>
+        </ul>
+      </div>  
+  </div>
+  <div class="hidden"></div>
+  <!-- 爆款推荐 -->
+  <div class="hot_box">
+    <h3></h3>
+    <div class="hot_carousel_wrap">
+        <ul class="hot_carousel">
+            <li><img src="public/image/15c9c14c45091aad10da5d4526f9844f.jpg" alt="3"></li>
+          <li><img src="public/image/dfd450cb5a414bb10933730e6f7778ff.jpg" alt="4"></li>
+          <li><img src="public/image/5df1834480c4368c862cb16209fc94f5.jpg" alt="1"></li>
+          <li><img src="public/image/9b3c424df4ad3a62897879f385d2a357.jpg" alt="2"></li>
+          <li><img src="public/image/15c9c14c45091aad10da5d4526f9844f.jpg" alt="3"></li>
+          <li><img src="public/image/dfd450cb5a414bb10933730e6f7778ff.jpg" alt="4"></li>
+          <li><img src="public/image/5df1834480c4368c862cb16209fc94f5.jpg" alt="1"></li>
+            <li><img src="public/image/9b3c424df4ad3a62897879f385d2a357.jpg" alt="2"></li>
+        </ul>
+        <a class="arrow arrow-left" href="#">&lt;</a>
+        <a class="arrow arrow-right" href="#">&gt;</a> 
+    </div>
+      <script>
+          var carousel =$(".hot_carousel")
+              carouselWrap = $(".hot_carousel_wrap") 
+              arrowLeft = $('a.arrow-left')
+              arrowRight = $('a.arrow-right')
+          var carouselWidth = -550, count = 2 ,timer = null;
+          var isClickable = true;
+            arrowLeft.click(
+                function () {
+                    if(isClickable == true){
+                        count --;
+                    }else{
+                        return false;
+                    }
+                    isClickable = false;
+                    var  animateLength = count *carouselWidth + "px";
+                    carousel.animate({"left":animateLength},"show",function () {
+                        isClickable = true;
+                        if(count <= 0){
+                            carousel.css({"left":"-1100px"});
+                            count = 2;
+                        }
+                    })
+                }
+            )
+          arrowRight.click(
+                   right
+          );
+          function right () {
+              if(isClickable == true){
+                  count ++;
+              }else{
+                  return false;
+              }
+              isClickable = false;
+              var  animateLength = count *carouselWidth + "px";
+              carousel.animate({"left":animateLength},"show",function () {
+                  isClickable = true;
+                  if(count >= 6){
+                      carousel.css({"left":"-1100px"});
+                      count = 2;
+                  }
+              })
+          }
+          setInterval(
+              right,2000
+          )
+      </script>
+
+  </div>
+</body>
+</html>

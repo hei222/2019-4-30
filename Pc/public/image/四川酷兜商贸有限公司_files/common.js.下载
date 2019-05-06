@@ -1,0 +1,189 @@
+﻿
+////版本控制
+//function getVersion(callback) {
+//    if (!!window.shop_version) {
+//        callback(window.shop_version);
+//    } else {
+//        $.ajaxSettings.async = false;
+//        $.getJSON(lanh.apiHost + "service/home/get_version.html", function (result) {
+//            if (!!result && result.status == 0) {
+//                switch (result.data) { //0==商铺 1==基础板 2==高级版 3==豪华板 
+//                    case "1":
+//                        window.shop_version = 1;
+//                        break;
+//                    case "2":
+//                        window.shop_version = 2;
+//                        break;
+//                    case "3":
+//                        window.shop_version = 3;
+//                        break;
+//                    case "1101":
+//                        window.shop_version = 1;
+//                        break;
+//                    case "1102":
+//                        window.shop_version = 2;
+//                        break;
+//                    case "1103":
+//                        window.shop_version = 3;
+//                        break;
+//                    case "1201":
+//                        window.shop_version = 1;
+//                        break;
+//                    case "1202":
+//                        window.shop_version = 2;
+//                        break;
+//                    case "1203":
+//                        window.shop_version = 3;
+//                        break;
+//                    case "1300":
+//                        window.shop_version = 0;
+//                        break;
+//                    case "1301":
+//                        window.shop_version = 1;
+//                        break;
+//                    case "1302":
+//                        window.shop_version = 2;
+//                        break;
+//                    case "1303":
+//                        window.shop_version = 3;
+//                        break;
+//                }
+//                callback(window.shop_version);
+//            }
+//        });
+//        $.ajaxSettings.async = true;
+//    }
+//}
+
+//获取服务器时间
+function getSysData(callback) {
+    $.getJSON(lanh.apiHost + "service/home/getsystemtime.html", function (result) {
+        if (!!result && result.status == 0 && !!result.data) {
+            callback(result.data.time);
+        }
+    });
+}
+
+/**   勿动
+   * 对time描述的以秒为单位的整数时间转字符  yyyy年MM月dd日HH点mm分
+   * @param time  输入的以秒为单位的整数时间
+   */
+window.timeSwitch = function(time){
+	  var dd=new Date(time * 1000);
+	  var r = dd.getFullYear()  + '年' ;
+	  var m = dd.getMonth() + 1;
+	  if( m < 10){
+	      r += '0' + m + '月';
+	  }else{
+	      r += m + '月';
+	  }
+	  var d = dd.getDate();
+	  if( d < 10){
+	      r += '0' + d + '日';
+	  }else{
+	      r += d + '日';
+	  }
+	  var h = dd.getHours();
+	  if( h < 10){
+	      r += '0' + h + '点';
+	  }else{
+	      r += h + '点';
+	  }
+	  var i = dd.getMinutes();
+	  if( i < 10){
+	      r += '0' + i + '分';
+	  }else{
+	      r += i + '分';
+	  }
+	  return r;
+}
+
+
+/**
+ * jQuery placeholder for IE6,7,8,9
+ */
+var JPlaceHolder = {
+    //检测
+    _check : function(){
+        return 'placeholder' in document.createElement('input');
+    },
+    //初始化
+    init : function(){
+        if(!this._check()){
+            this.fix();
+        }
+    },
+    //修复
+    fix : function(){
+        jQuery(':input[placeholder]').each(function(index, element) {
+            var self = $(this), txt = self.attr('placeholder');
+                self.wrap($('<div class="clearfix placeholder"></div>').css({position:'relative', zoom:'1', border:'none', background:'none', padding:'none', margin:'none',display: 'inline',display: 'inline-block',width:"100%"}));
+                var pos = self.position(), h = self.outerHeight(true), paddingleft = self.css('padding-left');
+                var holder = $('<span></span>').text(txt).css({position:'absolute', left:pos.left, top:pos.top, height:h, lineHeight:h+"px", paddingLeft:paddingleft, color:'#aaa'}).appendTo(self.parent());
+                self.focusin(function(e) {
+                    holder.hide();
+                }).focusout(function(e) {
+                    if(!self.val()){
+                        holder.show();
+                    }
+                });
+                holder.click(function(e) {
+                    holder.hide();
+                    self.focus();
+                });
+        });
+        jQuery(':input[placeholder]').bind('inputChange', function(event) {
+            $(this).siblings('span').hide();
+        });
+    }
+};
+//执行
+jQuery(function(){
+    JPlaceHolder.init();    
+});
+
+//$(function () {
+//    getVersion(function (Version) {
+//        if (Version == 0 && window.location.pathname == "/") {
+//            window.location.href = "/product/list";
+//        }
+//    });
+//});
+
+
+/**
+ * 控制台输出
+ */
+function logger(msg){
+    //console.log(msg);
+}
+
+
+//存储是否是分销店铺商品
+if(window.location.pathname=="/users/distribution/preview" || (window.location.pathname=="/product/detail" && !!getUrlParam('distributer_id'))  &&  getUrlParam('distributer_is_spread')=="0"){
+     $.cookie("iSDistributer",{
+        url:window.location.href,
+        distributer_id:!!getUrlParam('distributer_id')?getUrlParam('distributer_id'):getUrlParam('distributerId')
+     }, { expires: 3650000, path: "/" });
+}else{  
+    switch(window.location.pathname){
+        case "/":
+        case "/product/list": 
+        case "/product/detail":      
+            $.removeCookie("iSDistributer", { path: "/" });
+            break;
+
+    }
+   
+}
+
+window.lanh = $.extend(true, window.lanh, {
+    distributer:function(){
+        return $.cookie("iSDistributer");
+    },
+    iSDistributer:function(){
+        return !!$.cookie("iSDistributer");
+    }
+})
+
+

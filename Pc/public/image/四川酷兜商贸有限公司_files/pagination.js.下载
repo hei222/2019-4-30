@@ -1,0 +1,166 @@
+﻿/*
+* 加载分页数据
+* $page 页码json对象
+* $pageDiv 页码容器对象
+*/
+(function($){
+    var _pageIsRight = function($page,$url){
+        if(isNaN($page)){
+            lanh_modal.alert("参数非法");
+            setTimeout(function(){
+                window.location.href=$url;
+            },50000);
+        }
+        $page=parseInt($page);
+        if($page<1){
+            lanh_modal.alert("参数非法");
+            setTimeout(function(){
+                window.location.href=$url;
+            },50000);
+        }
+    }
+    var _LoadPage = function ($page, $pageDiv) {
+        var $pageinfo = '<ul class="pagination">', $pageIndex = parseInt($page.nowPageCount), $pageCount = parseInt($page.allPageCount), $itemCount = parseInt($page.allItemCount);
+        /* 当前页大于1时，首页、上一页有效 */
+        if ($pageIndex > 1) {
+            // $pageinfo += '<li class="index"><a href="javascript:void(0);">首页</a></li>';
+            $pageinfo += '<li class="prev"><a href="javascript:void(0);">&lt;&#160;&lt;上一页</a></li>';
+        } else {
+            // $pageinfo += '<li class="disabled"><a>首页</a></li>';
+            $pageinfo += '<li class="disabled"><a>&lt;&#160;&lt;上一页</a></li>';
+        }
+        /* 数字分页开始 */
+        if ($pageIndex == 1) { /* 当前页等于1时，选中当前页 */
+            $pageinfo += '<li class="active"><a>' + $pageIndex + '</a></li>';
+            if ($pageCount > 1) { /* 总页数大于1时，显示当前页加1页 */
+                $pageinfo += '<li><a href="javascript:void(0);">' + ($pageIndex + 1) + '</a></li>';
+            }
+            if ($pageCount > 2) { /* 总页数大于2时，显示当前页加2页 */
+                $pageinfo += '<li><a href="javascript:void(0);">' + ($pageIndex + 2) + '</a></li>';
+            }
+            if ($pageCount > 3) { /* 总页数大于3时，显示当前页加3页 */
+                $pageinfo += '<li><a href="javascript:void(0);">' + ($pageIndex + 3) + '</a></li>';
+            }
+            if ($pageCount > 5) { /* 总页数大于5时，显示末页 */
+                $pageinfo += '<li class="disabled"><a>...</a></li>';
+                $pageinfo += '<li><a href="javascript:void(0);">' + $pageCount + '</a></li>';
+            }
+        } else if ($pageIndex == 2) { /* 当前页等于2时，选中当前页，并显示当前页减1页 */
+            $pageinfo += '<li><a href="javascript:void(0);">' + ($pageIndex - 1) + '</a></li>';
+            $pageinfo += '<li class="active"><a>' + $pageIndex + '</a></li>';
+            if ($pageCount > 2) { /* 总页数大于2时，显示当前页加1页 */
+                $pageinfo += '<li><a href="javascript:void(0);">' + ($pageIndex + 1) + '</a></li>';
+            }
+            if ($pageCount > 3) { /* 总页数大于3时，显示当前页加2页 */
+                $pageinfo += '<li><a href="javascript:void(0);">' + ($pageIndex + 2) + '</a></li>';
+            }
+            if ($pageCount > 5) { /* 总页数大于5时，显示末页 */
+                $pageinfo += '<li class="disabled"><a>...</a></li>';
+                $pageinfo += '<li><a href="javascript:void(0);">' + $pageCount + '</a></li>';
+            }
+        } else if (($pageCount - $pageIndex) >= 2 && $pageIndex > 2) { /* 当前页大于2并且总页数减当前页大于等于2时，选中当前页，并显示当前页减1、2加1、2页 */
+            $pageinfo += '<li><a href="javascript:void(0);">' + ($pageIndex - 2) + '</a></li>';
+            $pageinfo += '<li><a href="javascript:void(0);">' + ($pageIndex - 1) + '</a></li>';
+            $pageinfo += '<li class="active"><a>' + $pageIndex + '</a></li>';
+            $pageinfo += '<li><a href="javascript:void(0);">' + ($pageIndex + 1) + '</a></li>';
+            $pageinfo += '<li><a href="javascript:void(0);">' + ($pageIndex + 2) + '</a></li>';
+            if ($pageIndex + 2 < $pageCount) { /* 总页数大于5时，显示末页 */
+                $pageinfo += '<li class="disabled"><a>...</a></li>';
+                $pageinfo += '<li><a href="javascript:void(0);">' + $pageCount + '</a></li>';
+            }
+        } else if (($pageCount - $pageIndex) == 1) { /* 总页数减当前页大于等于1时，选中当前页，并显示当前页减1、2加1页 */
+            $pageinfo += '<li><a href="javascript:void(0);">' + ($pageIndex - 2) + '</a></li>';
+            $pageinfo += '<li><a href="javascript:void(0);">' + ($pageIndex - 1) + '</a></li>';
+            $pageinfo += '<li class="active"><a>' + $pageIndex + '</a></li>';
+            $pageinfo += '<li><a href="javascript:void(0);">' + ($pageIndex + 1) + '</a></li>';
+        } else if (($pageCount - $pageIndex) == 0) { /* 总页数减当前页大于等于0时，选中当前页，并显示当前页减1、2页 */
+            $pageinfo += '<li><a href="javascript:void(0);">' + ($pageIndex - 2) + '</a></li>';
+            $pageinfo += '<li><a href="javascript:void(0);">' + ($pageIndex - 1) + '</a></li>';
+            $pageinfo += '<li class="active"><a>' + $pageIndex + '</a></li>';
+        }
+        /* 数字分页结束 */
+        /* 当前页小于总页数时，下一页 >、尾页有效 */
+        if ($pageIndex < $pageCount) {
+            $pageinfo += '<li class="next"><a href="javascript:void(0);">下一页 >&#160;&gt;</a></li>';
+        } else {
+            $pageinfo += '<li class="disabled"><a>下一页 >&#160;&gt;</a></li>';
+        }
+        $pageinfo += '</ul>';
+        $pageinfo += '<ul class="page-skp"><li>跳转到第</li><li><input class="form-control text-center page-skip1" type="text" value="' + $pageIndex + '" allpage="' + $pageCount + '" /></li><li>页</li>';
+
+        /* 装载分页信息 */
+        $pageDiv.html($pageinfo);
+    }
+
+    var _pageControl = function($page,$element,callback){//$page:当前页码   $element:当前模块    callback：更新数据方法
+        if (arguments.length > 3) {
+            var $url = arguments[3];
+            var argArr = arguments[4];
+            if (!!$url && $url.toString().indexOf("page=") == -1) {
+                if ($url.toString().indexOf("?") == -1) {
+                    $url = $url + "?page=1";
+                }else{
+                    $url = $url + "&page=1";
+                }
+            }
+        }
+        $element.find(".pagination li").click(function(){
+            switch($(this).attr("class")){
+                case "disabled":break;
+                case "active":break;
+                case "prev":$page--;break;
+                case "next":$page++;break;
+                case "index":$page =1;break;
+                default :$page = $(this).text();
+            }
+            if(!!$url){
+                window.location.href = $url.replace(/page=[\d]*/,"page="+$page);
+            }else{
+                if(!!argArr && argArr.length>0){
+                    argArr.shift();
+                    argArr.unshift($page);
+                    callback(argArr); 
+                }else{
+                    callback($page);  //更新数据列表方法，需修改为自己的方法名
+                }
+            }
+            return false;
+        })
+
+        $element.find(".page-skp .page-skip1").change(function(){
+            var nowPage = parseInt($(this).val()),
+                $allpage = parseInt($(this).attr("allpage"));
+            /* 验证正整数 */
+            if (!/^\d+$/.test(nowPage)) {
+                return false;
+            }
+            /* 必须大于0 */
+            if (nowPage <= 0) {
+                return false;
+            }
+            /* 超出最大页数时不跳转 */
+            if (nowPage > $allpage) {
+                return false;
+            }
+            if(!!$url){
+                window.location.href = $url.replace(/page=[\d]*/,"page="+nowPage);
+            }else{
+                if(!!argArr && argArr.length>0){
+                    argArr.shift();
+                    argArr.unshift(nowPage);
+                    callback(argArr); 
+                }else{
+                    callback(nowPage);  //更新数据列表方法，需修改为自己的方法名
+                }
+            }
+        })
+    }
+
+    $.pagination = {
+        pageIsRight:_pageIsRight,
+        LoadPage:_LoadPage,
+        pageControl:_pageControl
+    }
+
+})($);
+

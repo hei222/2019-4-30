@@ -1,0 +1,379 @@
+﻿
+var $local_href = window.location.href, districtState = false;
+//省市区连接的函数 
+var _changed = function (id, area, ini) {
+  // console.log(id+","+ area+","+ ini);
+    $.ajax({
+        type: "GET",
+        url: lanh.apiHost + "/service/region/list.html?parent_id=" + id,
+        dataType: "json",
+        success: function (result) {
+            // console.log(result);
+            if (result.data.regions.length == 0) {
+                districtState = true;
+            } else {
+                districtState = false;
+            }
+            var $tmpl = "<option value={id}>{name}</option>";
+            var $tmplselect = "<option value={id} selected ='selected'>{name}</option>";
+            var $tmptop = "";
+            if (area == 'city') {
+                $tmptop = "<option value=0>请选择城市</option>"
+            } else if (area == 'district') {
+                $tmptop = "<option value=0>请选择区</option>"
+            } else if (area == 'province') {
+                $tmptop = "<option value=0>请选择省份</option>"
+            }
+            var template = [];
+            template.push($tmptop);
+            $.each(result.data.regions, function (key, val) {
+                if (val.id == ini) {
+                    template.push($tmplselect.replace("{name}", val.name).replace("{id}", val.id))
+                } else {
+                    template.push($tmpl.replace("{name}", val.name).replace("{id}", val.id))
+                }
+            })
+            $("#" + area).html(template.join(""));
+        },
+        error: function (result) { },
+        complete: function (result) { }
+    });
+}
+
+var address_num = function () {
+    // console.log("address_numaddress_numaddress_numaddress_num")
+    $.ajax({
+        type: "GET",
+        url: lanh.apiHost + "/service/address/list.html",
+        dataType: "json",
+        success: function (result) {
+            // console.log(result.data.length);
+            // console.log(result.data[0].id)
+            if (result.data.length == 1) {
+                dataid = result.data[0].id;
+                // console.log(dataid);
+                $.ajax({
+                    type: "GET",
+                    url: lanh.apiHost + "service/address/setDefault.html?address_id=" + dataid,
+                    dataType: "json",
+                    success: function (result) {
+                        // console.log(result);
+                        if (result.status == 0) {
+                            // console.log("设置默认地址成功")
+                        } else {
+                            // console.log("设置失败!");
+                        }
+                    },
+                    error: function (result) { },
+                    complete: function (result) {
+                        window.location.href = $local_href
+                    }
+                });
+            } else {
+                window.location.href = $local_href
+            }
+        },
+        error: function (result) {
+            // console.log("error");
+            // console.log(result);
+        },
+        complete: function (result) {
+        }
+    });
+
+    //return $num;
+}
+var _add_edit_address = function (id) {
+    var $element = $(".modal-dialog");
+    $element.find(".saveaddress").click(function () {
+
+        var $consignee = $element.find("#consignee").val();
+        var $province = $element.find("#province").val();
+        var $city = $element.find("#city").val();
+        var $district = $element.find("#district").val();
+        var $adrdetail = $element.find("#address").val();
+        var $mobile = $element.find("#mobile").val();
+        var $zipcode = $element.find("#zipcode").val();
+        var $email = $element.find("#email").val();
+        var $isDefuault= $element.find('#isDefuault').is(':checked')?1:0;
+        if ($consignee == '') {
+            lanh_modal.alert("收货人名称不能为空");
+            return false;
+        }
+        var key=/^[\u4e00-\u9fa5A-Za-z0-9]*$/;
+        var chinese= /[\u4E00-\u9FA5\uF900-\uFA2D]/g;
+        if (!key.test($consignee)) {
+            lanh_modal.alert("收货人格式不正确");
+            return false;
+        }
+        if ($consignee.replace(chinese, 'aa').length>60) {
+            lanh_modal.alert("收货人长度不能超过60个字符");
+            return false;
+        }
+        if ($province == '0') {
+            lanh_modal.alert("省份不能为空");
+            return false;
+        }
+        if ($city == '0') {
+            lanh_modal.alert("城市不能为空");
+            return false;
+        }
+        if ($district == '0' && !districtState) {
+            lanh_modal.alert("区不能为空");
+            return false;
+        }
+        if ($adrdetail == '') {
+            lanh_modal.alert("详细地址不能为空");
+            return false;
+        }
+        if ($adrdetail.replace(chinese, 'aa').length>120) {
+            lanh_modal.alert("详细地址长度不能超过120个字符");
+            return false;
+        }
+        if ($mobile == '') {
+            lanh_modal.alert("手机号不能为空");
+            return false;
+        } else {
+            var re = /^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/;
+            if (!re.test($mobile)) {
+                lanh_modal.alert("手机格式不正确");
+                return false;
+            }
+        }
+        if ($zipcode != '') {
+            var re =/^[1-9][0-9]{5}$/;
+            if (!re.test($zipcode)) {
+                lanh_modal.alert("邮政编码格式不正确");
+                return false;
+            }
+        }
+        if ($email != '') {
+            var re = /^(?:\w+\.?)*\w+@(?:\w+\.)*\w+$/;
+            if (!re.test($email)) {
+                lanh_modal.alert("邮箱格式不正确");
+                return false;
+            }
+        }
+
+        var $address = {
+            address: {
+                "country": 1,
+                "province": $province,
+                "city": $city,
+                "district": $district,
+                "address": $adrdetail,
+                "consignee": $consignee,
+                "email": $email,
+                "zipcode": $zipcode,
+                "mobile": $mobile,
+                "best_time": "",
+                "sign_building": "1",
+                "zipcode": "",
+                'addr_is_default':$isDefuault
+            }
+        }
+        var $address_edit = {
+            "address_id": id,
+            "address": {
+                "country": 1,
+                "province": $province,
+                "city": $city,
+                "district": $district,
+                "address": $adrdetail,
+                "consignee": $consignee,
+                "email": $email,
+                "zipcode": $zipcode,
+                "mobile": $mobile,
+                "best_time": "",
+                "sign_building": "1",
+                "tel": "",
+                'addr_is_default':$isDefuault
+            }
+        }     
+        lanh_modal.modalClose();   
+        if (id == 0) {          
+            $.ajax({
+                type: "POST",
+                url: lanh.apiHost + "service/address/add.html",
+                contentType: "application/json", //必须有
+                dataType: "json", //表示返回值类型，不必须
+                data: JSON.stringify($address),
+                success: function (jsonResult) {
+                    if (jsonResult.status == 0) {
+                        btn_ajax =false;
+                        lanh_modal.alert("新增地址成功");
+                        address_num();
+                    } else {
+                        // console.log(jsonResult.msg);
+                    }
+                }
+            });
+        } else {
+            $.ajax({
+                type: "POST",
+                url: lanh.apiHost + "service/address/update.html",
+                contentType: "application/json", //必须有
+                dataType: "json", //表示返回值类型，不必须
+                data: JSON.stringify($address_edit),
+                success: function (jsonResult) {
+                    // console.log(jsonResult)
+                    if (jsonResult.status == 0) {
+                      btn_ajax= false;
+                        // console.log("修改地址成功")
+                        lanh_modal.alert("修改地址成功！");
+                        window.location.href = $local_href
+                    } else {
+                        // console.log("修改失败")
+                        lanh_modal.alert("修改地址失败！")
+                    }
+                    // console.log(jsonResult);
+                }
+            });
+        }
+    })
+}
+
+
+var address_modal = {
+    add_edit: function (title, width, height, colse) {
+        $contnt = '<form class="form-horizontal">'
+               + '<div class="modal-body">'
+               + '<div class="form-group edit_address">'
+               + '<label for="firstname" class="col-sm-2 control-label">'
+               + '<span>*</span>收货人：'
+               + '</label>'
+               + '<div class="col-sm-6 pr0">'
+               + '<input type="text" class="form-control" id="consignee" name="consignee" placeholder="请输入收货人姓名" value="">'
+               + '</div>'
+               + '</div>'
+               + '<div class="form-group edit_address">'
+               + '<label for="firstname" class="col-sm-2 control-label">'
+               + '<span>*</span>所在地区：'
+               + '</label>'
+               + '<div class="col-sm-3 pr0">'
+               + '<select class="form-control" id="province">'
+               + '<option value="0">请选择省份</option>'
+               + '</select>'
+               + '</div>'
+               + '<div class="col-sm-3 pr0">'
+               + '<select class="form-control" id="city" >'
+               + '<option value="0">请选择城市</option>'
+               + '</select>'
+               + '</div>'
+               + '<div class="col-sm-3 pr0">'
+               + '<select class="form-control" id="district">'
+               + '<option value="0">请选择区</option>'
+               + '</select>'
+               + '</div>'
+               + '</div>'
+               + '<div class="form-group edit_address">'
+               + '<label for="firstname"  class="col-sm-2 control-label">'
+               + '<span>*</span>详细地址：'
+               + '</label>'
+               + '<div class="col-sm-8 pr0">'
+               + '<input type="text" class="form-control" id="address" />'
+               + '</div>'
+               + '</div>'
+               + '<div class="form-group edit_address">'
+               + '<label  class="col-sm-2 control-label">'
+               + '<span>*</span>手机号：'
+               + '</label>'
+               + '<div class="col-sm-3 pr0">'
+               + '<input type="text" id="mobile" class="form-control">'
+               + '</div>'
+               + '<label  class="col-sm-2 control-label col-padding-clear-right">'
+               + '邮政编码：'
+               + '</label>'
+               + '<div class="col-sm-3 pr0 col-padding-clear-left">'
+               + '<input type="text" class="form-control" id="zipcode" />'
+               + '</div>'
+               + '</div>'
+               + '<div class="form-group edit_address">'
+               + '<label  class="col-sm-2 control-label">'
+               + '邮箱地址：</label>'
+               + '<div class="col-sm-8 pr0">'
+               + '<input type="text" id="email" class="form-control" />'
+               + '</div><br/>'              
+               + '</div>'
+               + '<div class="form-group edit_address isDefuault" style="margin-bottom:0;">'
+                + '<label  class="col-sm-2 control-label col-padding-clear-right">'
+               + '设为默认：'
+               + '</label>'
+               + '<div class="col-sm-3 pr0 col-padding-clear-left" style="padding-left: 15px;padding-top: 7px;">'
+               + '<input type="checkbox" id="isDefuault"/>'
+               + '</div>'
+               + '</div>'
+           + '</div>'
+        + '<div class="modal-footer text-left">'
+          + '<label  class="col-sm-2 control-label"></label>'
+          + '<div class="col-sm-8 col-padding-clear-left">'
+          + '<a href="javascript:void(0)" class="btn btn-danger saveaddress">保存收货地址</a>'
+          + '</div>'
+        + '</div>'
+        + '</form>';
+        /*if(colse==1){
+          $colse='';
+        }else{
+       $colse = '<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>'
+        }  
+         var msgHtml = '<div class="modal" id="mymodal"  style="width:' + width + 'px;">' +
+                                    '<div class="modal-dialog" style="width:' + width + 'px;">' +
+                                        '<div class="modal-content">' +
+                                         '   <div class="modal-header">' +
+                                          $colse+
+                                           '     <h4 class="modal-title">' + title + '</h4>' +
+                                            '</div>' +
+                                            '<div class="modal-body" style="height:' + (height - 30) + 'px;">' +
+                                            $contnt +
+                                            '</div>' +
+                                        '</div>' +
+                                    '</div>' +
+                                '</div>';
+        var $alert = $(msgHtml);
+        //$alert.modal("toggle");*/
+        $("#mymodal").remove();
+        lanh_modal.modal(title, $contnt, 650, 415);
+        if (colse == 1) {
+            $(".modal .close").hide();
+        }        
+    },
+    add_address: function (title, close) {        
+        address_modal.add_edit(title, "650", "400", close);
+        var $modal = $(".modal-dialog");
+        _changed(1, "province", 0);
+        $modal.find("#province").on("change", function () { _changed(this.value, "city", 0); });
+        $modal.find("#city").on("change", function () { _changed(this.value, "district", 0); });
+        _add_edit_address(0);
+    },
+    edit_address: function (title, id) {
+        $.ajax({
+            type: "GET",
+            url: lanh.apiHost + "service/address/list.html?address_id=" + id,
+            dataType: "json",
+            success: function (result) {
+                if (result.status == 0) {
+                    address_modal.add_edit(title, "650", "400");
+                    var $modal = $(".modal-dialog");
+                    $.each(result.data, function (key, val) {                       
+                        $modal.find("#consignee").val(val.consignee);
+                        _changed(1, "province", val.province);
+                        _changed(val.province, "city", val.city);
+                        _changed(val.city, "district", val.district);
+                        $modal.find("#address").val(val.address);
+                        $modal.find("#mobile").val(val.mobile);
+                        $modal.find("#zipcode").val(val.zipcode);
+                        $modal.find("#email").val(val.email);
+                        val.default_address==1?$modal.find("#isDefuault").attr("checked",true):'';
+                        //val.default_address==1?$modal.find(".isDefuault").css('display','none'):"";
+                    })
+                    $modal.find("#province").on("change", function () { _changed(this.value, "city", 0); });
+                    $modal.find("#city").on("change", function () { _changed(this.value, "district", 0); });
+                    _add_edit_address(id);
+                }
+            },
+            error: function (result) { },
+            complete: function (result) { }
+        });
+    }
+};
+

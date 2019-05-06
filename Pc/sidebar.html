@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/universal.css">
+    <link rel="stylesheet" href="css/siderbar.css">
+    <title>Document</title>
+    <script src="js/jquery-1.11.3.js"></script>
+</head>
+<body>
+    <div class="siderbar">
+        <div class="siderbar_wrap">
+            <div class="siderbar_state">
+                <div class="siderbar_nav">
+                    <!--用户-->
+                    <div class="siderbar_nav_user">
+                        <span>会员中心</span>
+                        <div></div>
+                    </div>
+                    <!--购物车-->
+                    <div class="siderbar_nav_shop">
+                        <div></div>
+                        <span>购物车</span>
+                    </div>
+                    <!--优惠券-->
+                    <div class="siderbar_nav_coupon">
+                       <span>优惠卡券</span>
+                        <div></div>
+                    </div>
+                    <!--收藏-->
+                    <div class="siderbar_nav_house">
+                        <span>我的收藏</span>
+                        <div></div>
+                    </div>
+                    <!--足迹-->
+                    <div class="siderbar_nav_footprint">
+                        <span>我的足迹</span>
+                        <div></div>
+                    </div>
+                    <!--反馈-->
+                    <div class="siderbar_nav_feedback">
+                        <span>用户反馈</span>
+                        <div></div>
+                    </div>
+                    <!--回到顶部-->
+                    <div class="siderbar_nav_return">
+                        <span>回到顶部</span>
+                        <div></div>
+                    </div>
+                </div>
+             </div>
+            <div class="siderbar_tabs">
+               <div class="siderbar_tabs_title">
+                   <img src="public/image/retract.png">
+                   <div>用户登录</div>
+               </div>
+                <div class="siderbar_tabs_content">
+                    <!--登录-->
+                    <div class="siderbar_tabs_login">
+                        <div class="login_nav">
+                            <div class="login_ti">
+                                 <span>用户名或密码输入错误</span>
+                             </div>
+                            <div class="login_user">
+                                <div><img src="public/image/user.jpg"></div>
+                                <input type="text" placeholder="邮箱/用户名/手机">
+                            </div>
+                            <div class="login_pwd">
+                                <div><img src="public/image/password22.jpg"></div>
+                                <input type="password" placeholder="密码">
+                            </div>
+                            <div class="login_ji">
+                                <input type="checkbox" ><span>记住账号</span>
+                                <a href="#">忘记密码?</a>
+                            </div>
+                            <div class="login_login">
+                                <button>登录</button>
+                            </div>
+                            <div class="login_zu clearfix">
+                                <a href="#">免费注册</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+         $(".siderbar_nav_user").hover(function () {
+             timer = setTimeout(function(){
+                 $(".siderbar_nav_user>span").animate({left:"-100px"})
+             },200)
+         },function () {
+             clearTimeout(timer)
+             $(".siderbar_nav_user>span").animate({left:"0"})
+         })
+         $(".siderbar_nav_coupon").hover(function () {
+             timer = setTimeout(function(){
+                 $(".siderbar_nav_coupon>span").animate({left:"-100px"})
+             },200)
+         },function () {
+             clearTimeout(timer)
+             $(".siderbar_nav_coupon>span").animate({left:"0"})
+         })
+         $(".siderbar_nav_house").hover(function () {
+             timer = setTimeout(function(){
+                 $(".siderbar_nav_house>span").animate({left:"-100px"})
+             },200)
+         },function () {
+             clearTimeout(timer)
+             $(".siderbar_nav_house>span").animate({left:"0"})
+         })
+         $(".siderbar_nav_footprint").hover(function () {
+             timer = setTimeout(function(){
+                 $(".siderbar_nav_footprint>span").animate({left:"-100px"})
+             },200)
+         },function () {
+             clearTimeout(timer)
+             $(".siderbar_nav_footprint>span").animate({left:"0"})
+         })
+         $(".siderbar_nav_feedback").hover(function () {
+             timer = setTimeout(function(){
+                 $(".siderbar_nav_feedback>span").animate({left:"-100px"})
+             },200)
+         },function () {
+             clearTimeout(timer)
+             $(".siderbar_nav_feedback>span").animate({left:"0"})
+         })
+         $(".siderbar_nav_return").hover(function () {
+             timer = setTimeout(function(){
+                 $(".siderbar_nav_return>span").animate({left:"-100px"})
+             },200)
+         },function () {
+             clearTimeout(timer)
+             $(".siderbar_nav_return>span").animate({left:"0"})
+         })
+         .hide()
+        $(window).scroll(function () {
+
+            if($(window).scrollTop()==0){
+                $(".siderbar_nav_return").hide()
+            }else{
+                $(".siderbar_nav_return").show()
+            }
+        })
+       $(".siderbar_nav_return>div").click(
+           function aa(){
+               var dd = document.documentElement,
+                   db = document.body,
+                   top = dd.scrollTop || db.scrollTop,
+                   step = Math.floor(top / 30);
+               (function bb () {
+                   top -= step;
+                   if (top > -step) {
+                       dd.scrollTop == 0 ? db.scrollTop = top:dd.scrollTop = top;
+                       setTimeout(bb, 30)
+                   }
+               })();
+           }
+       )
+         $(".siderbar_tabs_title>img").click(function () {
+             $(".siderbar_wrap").animate({ right:"-280px"} )
+         })
+
+         function  siderbar(){
+             $(".siderbar_wrap").animate({right:"0"})
+         }
+         $(".siderbar_nav_shop").click(siderbar)
+         $(".siderbar_nav_user").click(siderbar)
+         $(".siderbar_nav_coupon").click(siderbar)
+         $(".siderbar_nav_house").click(siderbar)
+         $(".siderbar_nav_footprint").click(siderbar)
+         $(".siderbar_nav_feedback").click(siderbar)
+        $(".login_ji>span").click(function () {
+            if( $(".login_ji>input").is(":checked")){
+                $(".login_ji>input").removeAttr("checked")
+            } else {
+                $(".login_ji>input").prop("checked",true)
+            }
+        })
+        
+
+    </script>
+</body>
+</html>

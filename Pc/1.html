@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="topDiv" name="topDiv">
+ 
+    <div id="div0" name="div0" style="border-style:solid;">
+    **********包含div1的父级元素 div0**********
+     
+     
+    <div class="div1" id="div1" name="mydiv" style="border-style:solid;">
+    <p>段落1 查找父元素</p>
+     
+     
+    <table id="table1">
+     
+    <tbody id="tbody1">
+      <tr id="mytr1">
+        <td id="mytd1">11closest()向上查找最近的元素（返回零个或一个元素的 jQuery 对象）</td>
+        
+      </tr>
+      
+      <tr id="mytr2">
+        <td id="mytd2">12parent()方法</td>
+      </tr>
+      
+      <tr>
+        <td id="mytd3">13parents("选择器")方法</td>
+      </tr>
+    </tbody>
+      
+    </table>
+    </div>
+    </div>
+     
+    <hr>
+     
+    <div id="div2" style="border-bottom :5px;border-style:solid;" name="mydiv">
+    <p>段落2 查找子元素</p>
+    <table  id="table2">
+      <tbody id="tbody2-1">
+        <tr>
+          <td id="sectd1">查找table2的td find()方法</td>
+        </tr>
+        <tr id="sectr2"> 
+          <td id="sectd2">查找table2的td children()方法</td>
+        </tr>
+        <tr>
+          <td id="sectd3">js的children[]属性来查找</td>
+        </tr>
+        
+      </tbody>
+      
+      <tbody id="table2-2">
+        <tr>
+          <td>tbody2-2</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+     
+    </div>
+     
+    <p>
+   
+     
+    </p>
+    <script src="js/jquery-1.11.3.js"></script>
+    <script>
+ 
+      $(function(){
+        /************       查找父元素         *************/
+        //closest()方法
+          $("#mytd1").bind("click",function(){
+              alert($(this).closest("table").attr("id"));   //table1
+            $(this).closest("tr").attr("id").animate({"backgroud":"yellow"});//mytr1
+          console.info($(this).closest());//本身
+          console.info($(this).closest("td"));//mytd1	返回元素本身。
+          console.info($("td").closest("tbody"));//返回三个tbody
+          /**
+           *官方解释：从元素本身开始，逐级向上级元素匹配，并返回最先匹配的元素。
+           *closest会首先检查当前元素是否匹配，如果匹配则直接返回元素本身。如果不匹配则向上查找父元素，一层一层往上，直到找到匹配选择器的元素。如果什么都没找到则返回一个空的jQuery对象。
+           */
+          });   
+          
+        //parent()方法
+          $("#mytd2").bind("click",function(){   
+              //alert($(this).html()); 		//$(this).html()是21   (this).attr("id")是mytd2
+              alert($(this).parent().parent().parent().attr("id"));
+             //.parent()是tr    第二个.parent是tbody。即使没有tbody标签，找到的也是tbody   第三个.parent()是table
+             
+           console.info($("tr").parent());//返回三个dbody:dbody1,dbody2-1,dbody2-2.同理,如果改成td,则返回好多tr
+           console.info($("table").parent());//返回两个div:div1,div2。
+           console.info($("table").parent("#divn"));//div1
+             //document.write("第一个parent的id:" + $(this).parent().attr("id") + "。        第二个parent的id是:"+$(this).parent().parent().attr("id") + "。      第三个parent的id是:"+$(this).parent().parent().parent().attr("id"));
+             /**parent官方解释：取得一个包含着所有匹配元素的唯一父元素的元素集合。 
+            * 
+          */
+          }); 
+          
+        //parent("选择器")   parents("选择器")
+          $("#mytd3").bind("click",function(){   
+            $("p").parent("#div1").css("background", "blue");//这里换成了p标签。不知道为什么用this找不到元素
+          //原因：$(this).parent() 选择的为td3,在td3里面继续找div1自然找不到
+            
+          //alert($(this).parent("#div").attr("id"));//undefined
+            alert($(this).parents("div")[0].attributes.id.value);//div1   注意一个parent parents
+            alert($(this).parents("div")[1].attributes.id.value);//div0   
+          
+          console.info($(this).parents("div"));//div1 div0 topdiv 向上找所有的div.可以一层一层向上找，返回所有符合条件的
+          
+          /** parents官方解释：
+           *  取得一个包含着所有匹配元素的祖先元素的元素集合（不包含根元素）。可以通过一个可选的表达式进行筛选。
+           *  语文不好，看着真心弄不懂~~~ 泪奔，见下面解释.
+           */
+          });
+          
+          
+          /************       查找子元素         *************/
+          //查找table2的td元素      find()
+          $("#sectd1").bind("click",function(){
+            alert($("#table2").find("td").length);//和$("#table2 td")效果一样
+            /* $("#table2").find("td").each(function(index,element){
+              alert($(element).text());
+            }); */
+          //alert($("tr").find("td").length);			//7
+          
+          console.info($("#table2 td"));
+          console.info($("tr").find("td"));//返回所有匹配的td
+          /**官方解释：
+           * 搜索所有与指定表达式匹配的元素。
+           */
+          });
+          
+          //children()
+          $("#sectd2").bind("click",function(){
+            alert($("#table2").children().children().children("td[id='sectd2']").html());
+            //children() 是 tbody      children()是 tr   children("td[id='sectd2']")是td
+          console.info($("div[name='mydiv']").children());//p table1 p table2.返回name为mydiv的所有 子元素
+          /**官方解释：
+           *取得一个包含匹配的元素集合中每一个元素的所有子元素的元素集合。
+           */
+          });
+          
+          
+        // js的 children[]
+          $("#sectd3").bind("click",function(){
+            var table = document.getElementById("table2");
+            table.animate({"backgroud":"yellow"});
+            //children[0] 是 tbody      children[2]是 第三行的tr   children[0]是td
+          console.info(table.children);//两个tbody2-1	tbody2-2
+          console.info(table.children[0].children);//三个tr
+          
+          });
+          
+      }); 
+       
+      </script>   
+</body>
+</html>

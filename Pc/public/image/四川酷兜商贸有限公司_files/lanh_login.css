@@ -1,0 +1,27 @@
+﻿
+.modal-header {
+    height: 30px;
+    border:0;
+    background-color:#f3f3f5;
+}
+.login_box_tel.modal-header{
+   background:#d10311; 
+}
+.login_box_tel{background:#d10311 !important; color:#fff;}
+.modal-header .close {
+    margin-top: -12px;
+}
+.login_box_tel.modal-header .close{
+color:#fff !important;
+opacity:0.5;
+}
+.login_panel_box .alert_row{height:30px;line-height:30px;color:#e4393c;text-align:left;
+border:1px dashed #e4393c; padding-left:5px;}
+.login_panel_box #btnLogin_box{width:100%;border:1px solid #eb6b6e;outline:1px solid #cb2a2d;}
+.login_panel_box .black{color:#666666;}
+.login_panel_box .red{color:#e4393c;}
+.login_panel_box .form-horizontal{padding-top:10px;}
+.login_panel_box .form-horizontal .checkbox>label{display:inline;width:100px;}
+.login_panel_box .placeholder>span{
+    z-index: 99;
+}

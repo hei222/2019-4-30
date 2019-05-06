@@ -1,0 +1,37 @@
+﻿/*
+* 倒计时
+*$data倒计时的时间
+*$countDiv承载倒计时的容器
+*/
+(function ($) {
+    $.count_downNew = function ($data, $countDiv) {
+        getSysData(function(nowTime){
+            var Timer=parseInt($data)-parseInt(nowTime);
+            //console.log(Timer);
+            render(Timer);
+            setInterval(function(){
+                Timer--
+                render(Timer);
+            },1000)
+
+        });
+
+        function render(Timer) {
+            var TimerStr="";
+            TimerStr+=Zero(parseInt(Timer/3600));
+            TimerStr+=Zero(parseInt((Timer%3600)/60));
+            TimerStr+=Zero(parseInt((Timer%3600)%60));
+            $.each($countDiv.find('.box'),function(index,item){
+                $(item).html(TimerStr[index]);
+            }) 
+        }
+
+        function Zero(num){
+            if(num<10)
+                num="0"+num;
+            if(num>99)
+                num=99;
+            return num;
+        }
+    }
+})($);

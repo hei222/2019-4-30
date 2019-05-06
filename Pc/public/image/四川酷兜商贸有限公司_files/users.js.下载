@@ -1,0 +1,261 @@
+﻿(function() {
+    if (!window.lanh) window.lanh = {};
+
+    window.lanh = $.extend(true, window.lanh, {
+        //检查是否登录成功
+        isLogin: function() {
+            return !!$.cookie("userInfo")
+        },
+        //获取用户信息
+        userInfo: function() {
+            return $.cookie("userInfo");
+        },
+        //获取当前session_sid
+        session_sid: function() {
+            return $.cookie("session_sid");
+        },
+        //退出用户
+        logout: function() {
+            $.removeCookie("userInfo", { path: "/" });
+            $.removeCookie("session_sid", { path: "/" });
+            var $$url = window.location.href;
+            if (/\/users\//.test($$url)) {
+                window.location.href = $$url.substring(0, $$url.indexOf("/users/")) + "/users/login?redirect=" + encodeURIComponent($$url);
+            } else {
+                window.location.reload();
+            }
+        }
+    });
+
+    //判断需要登录的URL
+    switch (window.location.pathname) {
+        case "/users/index":
+        case "/users/securitySetting":
+        case "/users/personal_data":
+        case "/users/address_list":
+        case "/users/coupon":
+        case "/users/sys_msg":
+        case "/users/collection":
+            // case "/order/confirm_order":
+        case "/users/judge":
+        case "/users/judge_solve":
+        case "/users/my_members":
+        case "/users/contributions":
+        case "/users/refund":
+        case "/users/orderList":
+        case "/users/orderList/orderDetails":
+        case "/users/orderList/logistics_query":
+        case "/users/refundDetails":
+        case "/users/orderListPay":
+        case "/users/order_judge":
+        case "/users/integral":
+        case "/users/distribution/shareEarn":
+        case "/users/distribution/propose_member":
+        case "/users/distribution/myshop":
+        case "/users/distribution/distribution_close":
+        case "/users/distribution/personalStores":
+        case "/users/distribution/myIncome":
+        case "/users/distribution/balance":
+        case "/users/distribution/applyCash":
+        case "/users/distribution/bankCard":
+        case "/users/setting":
+        case "/users/phoneVerification":
+        case "/users/message":
+        case "/users/email":
+            if (window.lanh.isLogin() == false) {
+                var $$url = encodeURIComponent(window.location.href);
+                window.onload = function() {
+                    // window.setTimeout(function(){
+                    if (!!$$url) {
+                        window.location.href = "/users/login?redirect=" + $$url;
+                    }
+                    // }, 1000)
+                }
+            }
+            break;
+    }
+    switch (window.location.pathname) {
+        //case "/users/login":
+        case "/users/password_find":
+            if (window.lanh.isLogin() == true) {
+                window.location.href = "/users/index"
+            }
+            break;
+    }
+
+    if (!window.user_menu) window.user_menu = [];
+    window.user_menu = [{
+        "key": "",
+        "title": "账户设置",
+        "url": "",
+        "level": "itemFirst",
+        "chlidren": [{
+            "key": "",
+            "title": "账户安全",
+            "level": "itemSecond",
+            "url": "/users/securitySetting",
+            "chlidren": [{
+                "key": "",
+                "title": "登录密码",
+                "level": "itemThird",
+                "url": "/users/setting"
+            }, {
+                "key": "",
+                "title": "邮箱验证",
+                "level": "itemThird",
+                "url": "/users/email"
+            }, {
+                "key": "",
+                "title": "手机验证",
+                "level": "itemThird",
+                "url": "/users/phoneVerification"
+            }, {
+                "key": "",
+                "title": "密码保护",
+                "level": "itemThird",
+                "url": "/users/security"
+            }, {
+                "key": "",
+                "title": "交易密码",
+                "level": "itemThird",
+                "url": "/users/deal"
+            }]
+        }, {
+            "key": "",
+            "title": "个人资料",
+            "level": "itemSecond",
+            "url": "/users/personal_data"
+        }, {
+            "key": "",
+            "title": "收货地址",
+            "level": "itemSecond",
+            "url": "/users/address_list"
+        }]
+    }, {
+        "key": "",
+        "title": "我的交易",
+        "url": "",
+        "level": "itemFirst",
+        "chlidren": [{
+            "key": "",
+            "title": "我的购物车",
+            "level": "itemSecond",
+            "url": "/users/shoppingCar"
+        }, {
+            "key": "",
+            "title": "已买到的商品",
+            "level": "itemSecond",
+            "url": "/users/orderList",
+            "chlidren": [{
+                "key": "",
+                "title": "评价商品",
+                "url": "/users/order_judge",
+                "level": "itemThird",
+                "chlidren": []
+            }]
+        }, {
+            "key": "",
+            "title": "我的评价",
+            "level": "itemSecond",
+            "url": "/users/judge"
+        }, {
+            "key": "",
+            "title": "我的收藏",
+            "level": "itemSecond",
+            "url": "/users/collection"
+        }, {
+            "key": "我的留言",
+            "title": "我的留言",
+            "level": "itemSecond",
+            "url": "/users/message"
+        }, {
+            "key": "",
+            "title": "我的积分",
+            "level": "itemSecond",
+            "url": "/users/integral"
+        }, {
+            "key": "",
+            "title": "我的优惠卡券",
+            "level": "itemSecond",
+            "url": "/users/coupon"
+        }]
+    }, {
+        "key": "",
+        "title": "我的分成",
+        "url": "",
+        "level": "itemFirst",
+        "chlidren": [{
+            "key": "",
+            "title": "我的贡献",
+            "level": "itemSecond",
+            "url": "/users/contributions"
+        }, {
+            "key": "",
+            "title": "我的会员",
+            "level": "itemSecond",
+            "url": "/users/my_members"
+        }, {
+            "key": "",
+            "title": "分成系统通知",
+            "level": "itemSecond",
+            "url": "/users/system_notice"
+        }]
+    }, {
+        "key": "",
+        "title": "分享赚钱",
+        "url": "",
+        "level": "itemFirst",
+        "chlidren": [{
+            "key": "",
+            "title": "分享赚奖励",
+            "level": "itemSecond",
+            "url": "/users/distribution/shareEarn"
+        }, {
+            "key": "",
+            "title": "我的店铺",
+            "level": "itemSecond",
+            "url": "/users/distribution/personalStores",
+            "chlidren": [{
+                "key": "",
+                "title": "",
+                "level": "itemThird",
+                "url": "/users/distribution/myshop",
+            }]
+
+        }, {
+            "key": "",
+            "title": "我的收入",
+            "level": "itemSecond",
+            "url": "/users/distribution/myIncome"
+        }, {
+            "key": "",
+            "title": "我推荐的会员",
+            "level": "itemSecond",
+            "url": "/users/distribution/propose_member"
+        }, {
+            "key": "",
+            "title": "账户余额",
+            "level": "itemSecond",
+            "url": "/users/distribution/balance",
+            "chlidren": [{
+                "key": "",
+                "title": "资金账户",
+                "level": "itemThird",
+                "url": "/users/distribution/bankCard"
+            }, {
+                "key": "",
+                "title": "申请提现",
+                "level": "itemThird",
+                "url": "/users/distribution/applyCash"
+            }]
+        }]
+    }];
+    if (!window.user_other_menu) window.user_other_menu = [];
+    window.user_other_menu = [{
+        "key": "",
+        "title": "消息中心",
+        "url": "/users/sys_msg",
+        "level": "itemFirst",
+        "chlidren": []
+    }];
+})();

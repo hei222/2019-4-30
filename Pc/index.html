@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <link rel="stylesheet" href="css/universal.css">
+  <link rel="stylesheet" href="css/index.css">
+  <script src="js/jquery.min.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <title>Document</title>
+</head>
+<body>
+       <!--商品分类菜单-->
+  <div>
+      <div class="feilei">
+        <div class="feilei_nav">
+          <div class="feilei_nav_tu">
+              <h3>全部商品分类</h3>
+              <div class="feilei_nav_tu_biao">
+                <ul>
+                  <li><span><a href="#">川渝四大腌菜</a></span></li>
+                  <li><span><a href="#">山珍系列</a></span></li>
+                  <li><span><a href="#">肉食系列</a></span></li>
+                  <li><span><a href="#">零食系列</a></span></li>
+                  <li><span><a href="#">养生饮品</a></span></li>
+                </ul>
+              </div>
+          </div>
+          <ul class="feilei_nav_list">
+            <li>
+              <a href="">首页</a>
+            </li>
+            <li>
+              <a href="">限时抢购</a>
+            </li>
+            <li>
+              <a href="">热卖商品</a>
+            </li>
+            <li>
+              <a href="">会员中心</a>
+            </li>
+            <li>
+              <a href="">联系我们</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+  </div>
+  <script>
+      
+  </script>
+  <!--焦点轮播图 -->
+  <div class="focus">
+    <div id="demo" class="carousel" data-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="public/image/e49e3ec9a9aba220890e5ea428e3a1e9.jpg"/>
+            </div>
+            <div class="carousel-item">
+                <img src="public/image/d8d3c7f5d4511038e8f74af1653998e0.jpg"/>
+            </div>
+            <div class="carousel-item">
+                <img src="public/image/2e7a549f072d32aa113464938cc1a3d6.jpg"/>
+            </div>
+            <div class="carousel-item">
+              
+                <img src="public/image/b7353a4299f98fa561d854b9ec3ab098.jpg"/>
+            </div>  
+            <div class="carousel-item">
+                <img src="public/image/1ad72d3f7e326d738d8e9e8632f5dd64.jpg"/>
+            </div>  
+        </div>
+        <ul class="carousel-indicators">
+            <li class="active" data-slide-to="0" data-target="#demo"></li>
+            <li data-slide-to="1" data-target="#demo"></li>
+            <li data-slide-to="2" data-target="#demo"></li>
+            <li data-slide-to="3" data-target="#demo"></li>
+            <li data-slide-to="4" data-target="#demo"></li>
+        </ul>
+      </div>  
+  </div>
+  <div class="hidden"></div>
+  <!-- 爆款推荐 -->
+  <div class="hot_box">
+    <h3></h3>
+    <div class="hot_carousel_nav">
+        <div class="hot_carousel_wrap">
+            <ul class="hot_carousel">
+              <li><img src="public/image/15c9c14c45091aad10da5d4526f9844f.jpg" alt="3"></li>
+              <li><img src="public/image/dfd450cb5a414bb10933730e6f7778ff.jpg" alt="4"></li>
+              <li><img src="public/image/5df1834480c4368c862cb16209fc94f5.jpg" alt="1"></li>
+              <li><img src="public/image/9b3c424df4ad3a62897879f385d2a357.jpg" alt="2"></li>
+              <li><img src="public/image/15c9c14c45091aad10da5d4526f9844f.jpg" alt="3"></li>
+              <li><img src="public/image/dfd450cb5a414bb10933730e6f7778ff.jpg" alt="4"></li>
+              <li><img src="public/image/5df1834480c4368c862cb16209fc94f5.jpg" alt="1"></li>
+              <li><img src="public/image/9b3c424df4ad3a62897879f385d2a357.jpg" alt="2"></li>
+            </ul>
+            <a class="arrow arrow-left" href="javascript:;">&lt;</a>
+            <a class="arrow arrow-right" href="javascript:;">&gt;</a> 
+        </div>
+    </div>
+   <div class="hot_carousel_nav2">
+    <div class="hot_carousel_wrap2">
+        <ul class="hot_carousel2">
+            <li><img src="public/image/9c45514d1cf384954b18a05df99d3e44.jpg" alt="3"></li>
+            <li><img src="public/image/933d653309d3fffce72919728a31b87a.jpg" alt="4"></li>
+            <li><img src="public/image/4691e782ac3a04b8b0b1116c9e2d3ece.jpg" alt="1"></li>
+            <li><img src="public/image/ed5045ac3074f65292bf663a86049152.jpg" alt="2"></li>
+            <li><img src="public/image/9c45514d1cf384954b18a05df99d3e44.jpg" alt="3"></li>
+            <li><img src="public/image/933d653309d3fffce72919728a31b87a.jpg" alt="4"></li>
+            <li><img src="public/image/4691e782ac3a04b8b0b1116c9e2d3ece.jpg" alt="1"></li>
+            <li><img src="public/image/ed5045ac3074f65292bf663a86049152.jpg" alt="2"></li>
+        </ul>
+        <a class="arrow arrow-left2" href="javascript:;">&lt;</a>
+        <a class="arrow arrow-right2" href="javascript:;">&gt;</a> 
+    </div>
+   </div>
+   
+      <script>
+           var carousel =$(".hot_carousel")
+              carouselWrap = $(".hot_carousel_wrap") 
+              arrowLeft = $('a.arrow-left')
+              arrowRight = $('a.arrow-right') 
+
+              carousel2 =$(".hot_carousel2")
+              carouselWrap2 = $(".hot_carousel_wrap2") 
+              arrowLeft2 = $('a.arrow-left2')
+              arrowRight2 = $('a.arrow-right2')
+          var carouselWidth = -550, count = 2 , count2 = 2;
+          var isClickable = true;
+          var isClickable2 = true;
+            //左轮博
+            arrowLeft.click(
+                
+                function () {
+                    if(isClickable == true){
+                        count --;
+                    }else{
+                        return false;
+                    }
+                    isClickable = false;
+                    var  animateLength = count *carouselWidth + "px";
+                    carousel.animate({"left":animateLength},"show",function () {
+                        isClickable = true;
+                        if(count <= 0){
+                            carousel.css({"left":"-2200px"});
+                            count = 4;
+                        }
+                    })
+                }
+            )
+
+            arrowLeft2.click(
+                
+                function () {
+                    if(isClickable2 == true){
+                        count2 --;
+                    }else{
+                        return false;
+                    }
+                    isClickable2 = false;
+                    var  animateLength = count2 *carouselWidth + "px";
+                    carousel2.animate({"left":animateLength},"show",function () {
+                        isClickable2 = true;
+                        if(count2 <= 0){
+                            carousel2.css({"left":"-2200px"});
+                            count2 = 4;
+                        }
+                    })
+                }
+            )     
+
+          arrowRight.click(
+                   right
+          );
+
+          arrowRight2.click(
+                   right2
+          );
+          //右轮播
+          function right () {
+              if(isClickable == true){
+                  count ++;
+              }else{
+                  return false;
+              }
+              isClickable = false;
+              var  animateLength = count *carouselWidth + "px";
+              carousel.animate({"left":animateLength},"show",function () {
+                  isClickable = true;
+                  if(count >= 6){
+                      carousel.css({"left":"-1100px"});
+                      count = 2;
+                  }
+              })
+          }
+
+           function right2 () {
+              if(isClickable2 == true){
+                  count2 ++;
+              }else{
+                  return false;
+              }
+              isClickable2 = false;
+              var  animateLength = count2 *carouselWidth + "px";
+              carousel2.animate({"left":animateLength},"show",function () {
+                  isClickable2 = true;
+                  if(count2 >= 6){
+                      carousel2.css({"left":"-1100px"});
+                      count2 = 2;
+                  }
+              })
+          }
+          //自动动画
+         var timer = setInterval(
+              right
+              ,2000)
+            carouselWrap.hover(function(){
+                    clearInterval(timer)
+            },function(){
+                timer = setInterval(right,2000)
+            })
+
+        var timer2 = setInterval(
+              right2
+              ,2000)
+            carouselWrap2.hover(function(){
+                    clearInterval(timer2)
+            },function(){
+                timer2 = setInterval(right2,2000)
+            })
+         </script>
+
+  </div>
+  <!-- 猜你喜欢 -->
+     <div class="selling">
+         <div class="sel_nav">
+             <h3>
+                 <span>猜你喜欢</span>
+                 <img src="public/image/h3Img.png">
+             </h3>
+             <div class="sel_content">
+                 <ul>
+                     <li><a href="">
+                         <div class="sel_all sel_img1"></div>
+                         <div class="selTit">
+                             <span>￥ 9.90</span>
+                             <span>￥ 15.00</span>
+                         </div>
+                         <p>酷兜古法黑糖灌装180g</p>
+                     </a></li>
+                     <li><a href="">
+                         <div class="sel_all sel_img2"></div>
+                         <div class="selTit">
+                             <span>￥ 5.00</span>
+                             <span>￥ 38.00</span>
+                         </div>
+                         <p>长明冷吃兔</p>
+                     </a></li>
+                     <li><a href="">
+                         <div class="sel_all sel_img3"></div>
+                         <div class="selTit">
+                             <span>￥ 6.00</span>
+                             <span>￥ 15.00</span>
+                         </div>
+                         <p>长明火边子牛肉</p>
+                     </a></li>
+                     <li><a href="">
+                         <div class="sel_all sel_img4"></div>
+                         <div class="selTit">
+                             <span>￥ 21.00</span>
+                             <span>￥ 33.00</span>
+                         </div>
+                         <p>火边子麻辣牛肉118g</p>
+                     </a></li>
+                     <li><a href="">
+                         <div class="sel_all sel_img5"></div>
+                         <div class="selTit">
+                             <span>￥ 5.00</span>
+                             <span>￥ 55.80</span>
+                         </div>
+                         <p>长明精品麻辣牛肉</p>
+                     </a></li>
+                 </ul>
+             </div>
+         </div>
+    </div>
+       <script>
+           <!--猜你喜欢-->
+           var  selAllH = 110 + "%";
+           var  selAllY = 100 + "%";
+           $(".sel_all").hover(function () {
+            
+               $(this).stop(true,true).animate({"background-size": selAllH})
+           }, function () {
+                   $(this).stop(true,true).animate({"background-size": selAllY})
+               }
+         )
+       </script>
+
+       <!--楼层广告-->
+    <div class="floor_louad">
+        <div></div>
+    </div>
+<!--第一层-->
+       <div class="floor_b">
+           <div class="floor_box">
+               <div class="floor_box_content clearfix">
+                   <div class="floor_box_title">
+                       <div>
+                           <a href="#">
+                               <p>肉食系列</p>
+                           </a>
+                       </div>
+                       <div>
+                           <a href="#">
+                               <p>查看更多</p>
+                           </a>
+                       </div>
+                   </div>
+                   <div class="floor_box_img clearfix">
+                       <div class="floor_box_lun">
+                           <div class="carousel" data-ride="carousel" id="demo1">
+                               <div class="carousel-inner">
+                                   <div class="carousel-item active">
+                                       <img src="public/image/462a34559768ed2087bf081c608c88f0.jpg" alt="">
+                                   </div>
+                                   <div class="carousel-item">
+                                       <img src="public/image/09b9f4ed9790fbba393cd221a4353bed.jpg" alt="">
+                                   </div>
+                               </div>
+                               <ul class="carousel-indicators">
+                                   <li class="active" data-slide-to="0" data-target="#demo1"></li>
+                                   <li data-slide-to="1" data-target="#demo1"></li>
+                               </ul>
+                           </div>
+                       </div>
+                       <div class="floor_box_list">
+                           <ul>
+                               <li>
+                                   <div>
+                                       <a href="#">
+                                           <div>
+                                               <img src="public/image/6e15b9e1cf716c4f4520042ee63a10fa.jpg_lg.jpg">
+                                           </div>
+
+                                           <div>
+                                               <h3>长明冷吃兔</h3>
+                                               <p>
+                                                   <span>￥ 5.00</span>
+                                                   <span>￥ 38.00</span>
+                                               </p>
+                                           </div>
+                                       </a>
+                                   </div>
+                               </li>
+                               <li>
+                                   <div>
+                                       <a href="#">
+                                           <div>
+                                               <img src="public/image/14ecc33d2be250bf6000dc20476a367b.jpg_lg.jpg" alt="">
+                                           </div>
+                                           <div>
+                                               <h3>长明火边子牛肉</h3>
+                                               <p>
+                                                   <span>￥ 6.00</span>
+                                                   <span>￥ 88.00</span>
+                                               </p>
+                                           </div>
+                                       </a>
+                                   </div>
+                               </li>
+                               <li>
+                                   <div>
+                                       <a href="#">
+                                           <div>
+                                               <img src="public/image/b04a1689dbc21a1a062849f7aa664818.jpg_lg.jpg">
+                                           </div>
+
+                                           <div>
+                                               <h3>长明精品麻辣牛肉</h3>
+                                               <p>
+                                                   <span>￥ 5.00</span>
+                                                   <span>￥ 55.80</span>
+                                               </p>
+                                           </div>
+                                       </a>
+                                   </div>
+                               </li>
+                               <li>
+                                   <div>
+                                       <a href="#">
+                                           <div>
+                                               <img src="public/image/2e4c38cb3089f3978681905715991d76.jpg_lg.jpg">
+                                           </div>
+                                           <div>
+                                               <h3>长明麻辣牛肉118g</h3>
+                                               <p>
+                                                   <span>￥ 21.00</span>
+                                                   <span>￥ 33.00</span>
+                                               </p>
+                                           </div>
+                                       </a>
+                                   </div>
+                               </li>
+                               <li>
+                                   <div>
+                                       <a href="#">
+                                           <div>
+                                               <img src="public/image/66ae2eac7bdfb259f77e2aa1489f4a09.jpg_lg.jpg">
+                                           </div>
+                                           <div>
+                                               <h3>长明龙须牛肉32g</h3>
+                                               <p>
+                                                   <span>￥ 5.00</span>
+                                                   <span>￥ 8.00</span>
+                                               </p>
+                                           </div>
+                                       </a>
+                                   </div>
+                               </li>
+                               <li>
+                                   <div>
+                                       <a href="#">
+                                           <div>
+                                               <img src="public/image/5b443c28f8007ab212570f24d0865333.jpg_lg.jpg">
+                                           </div>
+
+                                           <div>
+                                               <h3>广汉烟堆坎上人家土麻鸭700g礼盒</h3>
+                                               <p>
+                                                   <span>￥ 38.00</span>
+                                                   <span>￥ 49.00</span>
+                                               </p>
+                                           </div>
+                                       </a>
+                                   </div>
+                               </li>
+                               <li>
+                                   <div>
+                                       <a href="#">
+                                           <div>
+                                               <img src="public/image/32d48ca615e29f1dde5e8fe1f888af55.jpg_lg.jpg">
+                                           </div>
+                                           <div>
+                                               <h3>坎上人家藤椒味即食缠丝兔160g</h3>
+                                               <p>
+                                                   <span>￥ 33.50</span>
+                                                   <span>￥ 33.80</span>
+                                               </p>
+                                           </div>
+                                       </a>
+                                   </div>
+                               </li>
+                               <li>
+                                   <div>
+                                       <a href="#">
+                                           <div>
+                                               <img src="public/image/6e15b9e1cf716c4f4520042ee63a10fa.jpg_lg.jpg">
+                                           </div>
+                                           <div>
+                                               <h3>长明卤牛肉</h3>
+                                               <p>
+                                                   <span>￥ 5.00</span>
+                                                   <span>￥ 38.80</span>
+                                               </p>
+                                           </div>
+                                       </a>
+                                   </div>
+                               </li>
+                           </ul>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div>
+<!--第二层-->
+       <div class="floor_b">
+           <div class="floor_box">
+               <div class="floor_box_content clearfix">
+                   <div class="floor_box_title">
+                       <div>
+                           <a href="#">
+                               <p>零食系列</p>
+                           </a>
+                       </div>
+                       <div>
+                           <a href="#">
+                               <p>查看更多</p>
+                           </a>
+                       </div>
+                   </div>
+                   <div class="floor_box_img clearfix">
+                       <div class="floor_box_lun">
+                           <div class="carousel" data-ride="carousel" id="demo2">
+                               <div class="carousel-inner">
+                                   <div class="carousel-item active">
+                                       <img src="public/image/462a34559768ed2087bf081c608c88f0.jpg" alt="">
+                                   </div>
+                                   <div class="carousel-item">
+                                       <img src="public/image/09b9f4ed9790fbba393cd221a4353bed.jpg" alt="">
+                                   </div>
+                               </div>
+                               <ul class="carousel-indicators">
+                                   <li class="active" data-slide-to="0" data-target="#demo2"></li>
+                                   <li data-slide-to="1" data-target="#demo2"></li>
+                               </ul>
+                           </div>
+                       </div>
+                       <div class="floor_box_list">
+                           <ul>
+                               <li>
+                                   <div>
+                                       <a href="#">
+                                           <div>
+                                               <img src="public/image/6e15b9e1cf716c4f4520042ee63a10fa.jpg_lg.jpg">
+                                           </div>
+
+                                           <div>
+                                               <h3>长明冷吃兔</h3>
+                                               <p>
+                                                   <span>￥ 5.00</span>
+                                                   <span>￥ 38.00</span>
+                                               </p>
+                                           </div>
+                                       </a>
+                                   </div>
+                               </li>
+                               <li>
+                                   <div>
+                                       <a href="#">
+                                           <div>
+                                               <img src="public/image/14ecc33d2be250bf6000dc20476a367b.jpg_lg.jpg" alt="">
+                                           </div>
+                                           <div>
+                                               <h3>长明火边子牛肉</h3>
+                                               <p>
+                                                   <span>￥ 6.00</span>
+                                                   <span>￥ 88.00</span>
+                                               </p>
+                                           </div>
+                                       </a>
+                                   </div>
+                               </li>
+                               <li>
+                                   <div>
+                                       <a href="#">
+                                           <div>
+                                               <img src="public/image/b04a1689dbc21a1a062849f7aa664818.jpg_lg.jpg">
+                                           </div>
+
+                                           <div>
+                                               <h3>长明精品麻辣牛肉</h3>
+                                               <p>
+                                                   <span>￥ 5.00</span>
+                                                   <span>￥ 55.80</span>
+                                               </p>
+                                           </div>
+                                       </a>
+                                   </div>
+                               </li>
+                               <li>
+                                   <div>
+                                       <a href="#">
+                                           <div>
+                                               <img src="public/image/2e4c38cb3089f3978681905715991d76.jpg_lg.jpg">
+                                           </div>
+                                           <div>
+                                               <h3>长明麻辣牛肉118g</h3>
+                                               <p>
+                                                   <span>￥ 21.00</span>
+                                                   <span>￥ 33.00</span>
+                                               </p>
+                                           </div>
+                                       </a>
+                                   </div>
+                               </li>
+                               <li>
+                                   <div>
+                                       <a href="#">
+                                           <div>
+                                               <img src="public/image/66ae2eac7bdfb259f77e2aa1489f4a09.jpg_lg.jpg">
+                                           </div>
+                                           <div>
+                                               <h3>长明龙须牛肉32g</h3>
+                                               <p>
+                                                   <span>￥ 5.00</span>
+                                                   <span>￥ 8.00</span>
+                                               </p>
+                                           </div>
+                                       </a>
+                                   </div>
+                               </li>
+                               <li>
+                                   <div>
+                                       <a href="#">
+                                           <div>
+                                               <img src="public/image/5b443c28f8007ab212570f24d0865333.jpg_lg.jpg">
+                                           </div>
+
+                                           <div>
+                                               <h3>广汉烟堆坎上人家土麻鸭700g礼盒</h3>
+                                               <p>
+                                                   <span>￥ 38.00</span>
+                                                   <span>￥ 49.00</span>
+                                               </p>
+                                           </div>
+                                       </a>
+                                   </div>
+                               </li>
+                               <li>
+                                   <div>
+                                       <a href="#">
+                                           <div>
+                                               <img src="public/image/32d48ca615e29f1dde5e8fe1f888af55.jpg_lg.jpg">
+                                           </div>
+                                           <div>
+                                               <h3>坎上人家藤椒味即食缠丝兔160g</h3>
+                                               <p>
+                                                   <span>￥ 33.50</span>
+                                                   <span>￥ 33.80</span>
+                                               </p>
+                                           </div>
+                                       </a>
+                                   </div>
+                               </li>
+                               <li>
+                                   <div>
+                                       <a href="#">
+                                           <div>
+                                               <img src="public/image/6e15b9e1cf716c4f4520042ee63a10fa.jpg_lg.jpg">
+                                           </div>
+                                           <div>
+                                               <h3>长明卤牛肉</h3>
+                                               <p>
+                                                   <span>￥ 5.00</span>
+                                                   <span>￥ 38.80</span>
+                                               </p>
+                                           </div>
+                                       </a>
+                                   </div>
+                               </li>
+                           </ul>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div>
+<!--第三层-->
+       <div class="floor_b">
+           <div class="floor_box">
+               <div class="floor_box_content clearfix">
+                   <div class="floor_box_title">
+                       <div>
+                           <a href="#">
+                               <p>山珍系列</p>
+                           </a>
+                       </div>
+                       <div>
+                           <a href="#">
+                               <p>查看更多</p>
+                           </a>
+                       </div>
+                   </div>
+                   <div class="floor_box_img clearfix">
+                       <div class="floor_box_lun">
+                           <div class="carousel" data-ride="carousel" id="demo3">
+                               <div class="carousel-inner">
+                                   <div class="carousel-item active">
+                                       <img src="public/image/462a34559768ed2087bf081c608c88f0.jpg" alt="">
+                                   </div>
+                                   <div class="carousel-item">
+                                       <img src="public/image/09b9f4ed9790fbba393cd221a4353bed.jpg" alt="">
+                                   </div>
+                               </div>
+                               <ul class="carousel-indicators">
+                                   <li class="active" data-slide-to="0" data-target="#demo3"></li>
+                                   <li data-slide-to="1" data-target="#demo3"></li>
+                               </ul>
+                           </div>
+                       </div>
+                       <div class="floor_box_list">
+                           <ul>
+                               <li>
+                                   <div>
+                                       <a href="#">
+                                           <div>
+                                               <img src="public/image/6e15b9e1cf716c4f4520042ee63a10fa.jpg_lg.jpg">
+                                           </div>
+
+                                           <div>
+                                               <h3>长明冷吃兔</h3>
+                                               <p>
+                                                   <span>￥ 5.00</span>
+                                                   <span>￥ 38.00</span>
+                                               </p>
+                                           </div>
+                                       </a>
+                                   </div>
+                               </li>
+                               <li>
+                                   <div>
+                                       <a href="#">
+                                           <div>
+                                               <img src="public/image/14ecc33d2be250bf6000dc20476a367b.jpg_lg.jpg" alt="">
+                                           </div>
+                                           <div>
+                                               <h3>长明火边子牛肉</h3>
+                                               <p>
+                                                   <span>￥ 6.00</span>
+                                                   <span>￥ 88.00</span>
+                                               </p>
+                                           </div>
+                                       </a>
+                                   </div>
+                               </li>
+                               <li>
+                                   <div>
+                                       <a href="#">
+                                           <div>
+                                               <img src="public/image/b04a1689dbc21a1a062849f7aa664818.jpg_lg.jpg">
+                                           </div>
+
+                                           <div>
+                                               <h3>长明精品麻辣牛肉</h3>
+                                               <p>
+                                                   <span>￥ 5.00</span>
+                                                   <span>￥ 55.80</span>
+                                               </p>
+                                           </div>
+                                       </a>
+                                   </div>
+                               </li>
+                               <li>
+                                   <div>
+                                       <a href="#">
+                                           <div>
+                                               <img src="public/image/2e4c38cb3089f3978681905715991d76.jpg_lg.jpg">
+                                           </div>
+                                           <div>
+                                               <h3>长明麻辣牛肉118g</h3>
+                                               <p>
+                                                   <span>￥ 21.00</span>
+                                                   <span>￥ 33.00</span>
+                                               </p>
+                                           </div>
+                                       </a>
+                                   </div>
+                               </li>
+                               <li>
+                                   <div>
+                                       <a href="#">
+                                           <div>
+                                               <img src="public/image/66ae2eac7bdfb259f77e2aa1489f4a09.jpg_lg.jpg">
+                                           </div>
+                                           <div>
+                                               <h3>长明龙须牛肉32g</h3>
+                                               <p>
+                                                   <span>￥ 5.00</span>
+                                                   <span>￥ 8.00</span>
+                                               </p>
+                                           </div>
+                                       </a>
+                                   </div>
+                               </li>
+                               <li>
+                                   <div>
+                                       <a href="#">
+                                           <div>
+                                               <img src="public/image/5b443c28f8007ab212570f24d0865333.jpg_lg.jpg">
+                                           </div>
+
+                                           <div>
+                                               <h3>广汉烟堆坎上人家土麻鸭700g礼盒</h3>
+                                               <p>
+                                                   <span>￥ 38.00</span>
+                                                   <span>￥ 49.00</span>
+                                               </p>
+                                           </div>
+                                       </a>
+                                   </div>
+                               </li>
+                               <li>
+                                   <div>
+                                       <a href="#">
+                                           <div>
+                                               <img src="public/image/32d48ca615e29f1dde5e8fe1f888af55.jpg_lg.jpg">
+                                           </div>
+                                           <div>
+                                               <h3>坎上人家藤椒味即食缠丝兔160g</h3>
+                                               <p>
+                                                   <span>￥ 33.50</span>
+                                                   <span>￥ 33.80</span>
+                                               </p>
+                                           </div>
+                                       </a>
+                                   </div>
+                               </li>
+                               <li>
+                                   <div>
+                                       <a href="#">
+                                           <div>
+                                               <img src="public/image/6e15b9e1cf716c4f4520042ee63a10fa.jpg_lg.jpg">
+                                           </div>
+                                           <div>
+                                               <h3>长明卤牛肉</h3>
+                                               <p>
+                                                   <span>￥ 5.00</span>
+                                                   <span>￥ 38.80</span>
+                                               </p>
+                                           </div>
+                                       </a>
+                                   </div>
+                               </li>
+                           </ul>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div>
+     <!--楼层jquery-->
+       <script>
+           var  selAllH = 110 + "%";
+           var  selAllY = 100 + "%";
+           $(".floor_box_list>ul>li>div>a>div>img").hover(function () {
+
+                   $(this).stop(true,true).animate({"max-width": selAllH})
+               }, function () {
+                   $(this).stop(true,true).animate({"max-width": selAllY})
+               }
+           )
+       </script>
+</body>
+</html>

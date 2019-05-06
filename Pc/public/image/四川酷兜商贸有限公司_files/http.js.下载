@@ -1,0 +1,95 @@
+﻿(function() {
+    $(function() {
+        var _siteNoMaintenanceType = true;
+        $(document).ajaxSend(function(event, jqxhr, settings) {
+            //console.log(JSON.stringify(settings))
+            //settings.crossDomain = false;   //跨域支持
+            var session_sid = !getUrlParam("session_sid") ? ($.cookie("session_sid") || "") : getUrlParam("session_sid")
+            jqxhr.setRequestHeader("Content-Type", "application/json;charset=utf-8");
+            jqxhr.setRequestHeader("client_type", lanh.client_type);
+            jqxhr.setRequestHeader("client_version", lanh.client_version);
+            jqxhr.setRequestHeader("session_sid", session_sid);
+
+            //IE8/IE9->XDomainRequest
+            if ($.support.cors || !$.ajaxTransport || !window.XDomainRequest) {
+                var _params = ["client_type=" + lanh.client_type,
+                    "client_version=" + lanh.client_version,
+                    "session_sid=" + session_sid
+                ];
+                settings.url = settings.url + (settings.url.indexOf("?") == -1 ? "?" : "&") + _params.join("&");
+            }
+        });
+        $(document).ajaxSuccess(function(event, jqXHR, ajaxOptions) {
+            var _status = event.handleObj.handler.arguments[3];
+            if (typeof(_status) == "string" && _status.substring(0, 3) == "GIF") {
+
+            } else {
+                if (typeof(_status) != "object") { //判断接口返回是否为json
+                    _status = JSON.parse(_status);
+                }
+                if (_status.status == 1000) {
+                    $.removeCookie("userInfo", { path: "/" });
+                    $("html").trigger("bindUsers");
+                }
+                if (_status.status == 2000) {
+                    lanh_modal.alert("用户被锁定,请联系客服!");
+                    $.removeCookie("userInfo", { path: "/" });
+                    $("html").trigger("lockUsers");
+                }
+                if ((_status.status == 11000||_status.status==102)&& window.location.pathname != "/siteMaintenance" && _siteNoMaintenanceType) {
+                    _siteNoMaintenanceType = false;
+                    window.location.href = "/siteMaintenance";
+                }
+                if (_status.ext_status == 14004) { //分销员是否禁用
+                    if (window.location.href.indexOf("/users/distribution/preview") > -1) {
+                        window.location.href = "/siteMaintenance?type=3";
+                    } else if (window.location.href.indexOf("/users/distribution/shareEarn") == -1) {
+                        window.location.href = "/users/distribution/distribution_close";
+                    }
+                    $.removeCookie("iSDistributer", { path: "/" });
+                }
+                if (_status.ext_status == 14002) { //分销系统判定前端是否显示,不显示跳转到用户中心
+                    $.removeCookie("iSDistributer", { path: "/" });
+                    if (window.location.href.indexOf("/users/distribution/campaign_distribution") > -1) {
+                        if (window.location.search.indexOf("showsessionid") == -1) {
+                            window.location.href = "/siteMaintenance?type=3";
+                        }
+                    } else {
+                        window.location.href = "/siteMaintenance?type=3";
+                    }
+
+
+
+                }
+                // if(_status.status == 101){
+                //     if(_status.is_bind_main_domain==0&&_siteNoMaintenanceType&&window.location.pathname !="/siteMaintenance"){
+                //     _siteNoMaintenanceType=false;
+                //      window.location.href="/siteMaintenance?type=2";
+                //      }else if(_status.is_bind_main_domain==1&&window.location.host!=_status.domains.main_domain){
+                //         window.location.host=_status.domains.main_domain;
+                //         return false
+                //      }
+                // }
+            }
+
+            var _session_sid = null;
+            try {
+                _session_sid = jqXHR.getResponseHeader("session_sid") || JSON.parse(jqXHR.responseText).session_sid;
+            } catch (err) {}
+            if (!!_session_sid) {
+                $.cookie("session_sid", _session_sid, { path: "/" });
+            }
+        });
+        $(document).ajaxComplete(function(event, jqXHR, ajaxOptions) {
+            //console.log(JSON.stringify(jqXHR))
+            //console.log(JSON.stringify(ajaxOptions))
+            var _session_sid = null;
+            try {
+                _session_sid = jqXHR.getResponseHeader("session_sid") || JSON.parse(jqXHR.responseText).session_sid;
+            } catch (err) {}
+            if (!!_session_sid) {
+                $.cookie("session_sid", _session_sid, { path: "/" });
+            }
+        });
+    })
+})();

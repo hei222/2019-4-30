@@ -1,0 +1,26 @@
+﻿(function () {
+    if (!window.lanh) window.lanh = {};
+
+    window.lanh = $.extend(true, {
+        version: "2.0",
+        client_type: "web",
+		client_version: "2.3"   //配置默认版本号。(脚本最后会动态获取version.txt中的版本号
+    }, window.lanh);
+
+    //兼容IE8和IE9的跨域请求
+    jQuery.support.cors = true;
+
+    //cookie支持存取JSON格式
+    jQuery.cookie.json = true;
+
+    //从version.txt中获取版本号
+    $.ajax({
+        method: "get",
+        url: "/public/version.txt",
+        async: false,
+        contentType: "application/text",
+        success: function (data, textStatus, jqXHR) {
+            window.lanh.client_version = data;
+        }
+    });
+})();

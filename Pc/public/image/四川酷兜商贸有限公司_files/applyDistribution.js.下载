@@ -1,0 +1,311 @@
+(function() {
+    var time=0;
+    var _applyUiBase = function($element) {//获取分销招募页面信息参数
+        $.getJSON(lanh.apiHost + 'service/distribute/recruit.html', function(result) {
+            if (result.status == 0) {
+                $element.find(".recruitImg>img").attr({ src: result.data.sdconf_pc_cover_image }).error(function(){
+                     $(this).attr("src","/public/images/default_noImg03.png");
+                });
+                $element.find(".peopleMarketing").html(result.data.sdconf_remark);
+                if (result.data.sdconf_protcol_enabled == 1) {
+                    $element.find(".protocol").show();
+                    $element.find(".protocol>.protocolText").on("click", function() {
+                        lanh_modal.modal("分销员招募协议", result.data.sdconf_protcol, "560", '560');
+                    })
+                } else {
+                    $element.find(".protocol").hide();
+                }
+            }
+        })
+    }
+    var _applyDistr = function($element, typeUrl, showMobileCode) {
+        addAdress(1, "province", 0);
+        var sendCodeSussecc = false;
+        if (showMobileCode == 0) {
+            $element.find(".imgCode").hide();
+            $element.find(".textCode").hide();
+            $element.find("#mobileCode").hide();
+        } else {
+            _changeImgCode()
+        }
+        $element.find("#province").on("change", function() {
+            if ($(this).val() != 0) {
+                addAdress($(this).val(), "city", 0);
+                $element.find("#city").attr({ "disabled": false });
+                $element.find("#city").css({ "cursor": "pointer" });
+                $element.find("#district").attr({ "disabled": false });
+                $element.find("#district").css({ "cursor": "pointer" })
+            } else {
+                $element.find("#city").attr({ "disabled": true });
+                $element.find("#city").css({ "cursor": "not-allowed" });
+                $element.find("#district").attr({ "disabled": true });
+                $element.find("#district").css({ "cursor": "not-allowed" })
+            }
+            $element.find("#city").val(0);
+            $element.find("#district").val(0);
+
+        })
+        $element.find("#city").on("change", function() {
+                if ($(this).val() != 0) {
+                    $element.find("#district").attr("disabled", false);
+                    $element.find("#district").css("cursor", "pointer");
+                } else {
+                    $element.find("#district").attr("disabled", true);
+                    $element.find("#district").css("cursor", "not-allowed");
+                }
+                addAdress($(this).val(), "district", 0);
+                $element.find("#district").val(0);
+
+            })
+            //点击切换验证码
+        $element.find("#changCode").on("click", function(event) {
+            _changeImgCode();
+        });
+        /*姓名判断start*/
+        $element.find(".useName").blur(function() {
+            var useName = $(this);
+            if (useName.val() != "") {
+                var checkName = !!useName.val().match(/^[a-zA-Z\u4E00-\u9FA5]*$/g);
+                if (!checkName) {
+                    useName.parents(".formRight").find('.erro').html("请输入20个字内的中英文姓名");
+                    useName.val("");
+                }
+            } else {
+                useName.parents(".formRight").find('.erro').html("请填写姓名");
+            }
+
+        }).focus(function() {
+            $(this).parents(".formRight").find('.erro').html("");
+        });
+        /*姓名判断end*/
+        /*图片验证码判断start*/
+        $element.find(".img_checkCode").blur(function() {
+            var img_Code = $(this);
+            if (img_Code.val() != "") {
+                var checkImgcode = !!img_Code.val().match(/^[\d]{4}$/);
+                if (!checkImgcode) {
+                    img_Code.parents(".formRight").find('.erro').html("请输入正确的图片验证码");
+                    img_Code.val("");
+                }
+            } else {
+                img_Code.parents(".formRight").find('.erro').html("请输入图片验证码");
+            }
+        }).focus(function() {
+            $(this).parents(".formRight").find('.erro').html("");
+        });
+        /*图片验证码判断end*/
+        /*手机验证码判断start*/
+        $element.find(".mobile_checkCode").blur(function() {
+            var mobile_Code = $(this);
+            if (mobile_Code.val() != "") {
+                var checkMobilecode = !!mobile_Code.val().match(/^[\d]{6}$/);
+                if (!checkMobilecode) {
+                    mobile_Code.parents(".formRight").find('.erro').html("请输入正确的手机验证码");
+                    mobile_Code.val("")
+                }
+            } else {
+                mobile_Code.parents(".formRight").find('.erro').html("请输入手机验证码");
+            }
+        }).focus(function() {
+            $(this).parents(".formRight").find('.erro').html("");
+        });
+        /*手机验证码判断end*/
+        //手机号接口判断
+        function sendCodeCheck(url, callback) {
+            $.getJSON(lanh.apiHost + url + $element.find("#phoneNumber").val(), function(result) {
+                if (result.status == 0) {
+                    sendCodeSussecc = true;
+                    $element.find("#phoneNumber").parents(".formRight").find('.erro').html("");
+                    if (callback) {
+                        callback();
+                    }
+                } else if (result.status == 1) {
+                    $element.find("#phoneNumber").parents(".formRight").find('.erro').html("分销员已经存在，请更换手机号码");
+                    $element.find("#phoneNumber").val("");
+                } else {
+                    $element.find("#phoneNumber").parents(".formRight").find('.erro').html(result.msg);
+                }
+            });
+        }
+
+
+        /*手机号码判断start*/
+        $element.find("#phoneNumber").blur(function(event) {
+            var mobile = $(this);
+            var chackTel = !!mobile.val().match(/^(13[0-9]|15[0-9]|17[678]|18[0-9]|14[57])[0-9]{8}$/)
+            if ($(this).val() == "") {
+                mobile.parents(".formRight").find('.erro').html("请输入手机号码");
+                return false;
+            }
+            if (chackTel) {
+                var url = typeUrl == 1 ? "service/distribute/distributor_exists.html?mobile=" : "service/distribute/mobile_exists.html?mobile=";
+                sendCodeCheck(url);
+            } else {
+                mobile.parents(".formRight").find('.erro').html("请输入正确的手机号码");
+                mobile.val("")
+            }
+        }).focus(function(event) {
+            $(this).parents(".formRight").find('.erro').html("");
+        });
+        /*手机号码判断end*/
+
+        /*邮箱验证start*/
+        $element.find("#mailName").blur(function() {
+            if ($(this).val() == "") {
+                $(this).parents(".formRight").find('.erro').html("");
+                return false;
+            } else {
+                var chackEmail = !!$(this).val().match(/^([\u4e00-\u9fa5aA-Za-z0-9]+[_|\_|\.\-&]*)+@([\u4e00-\u9fa5aa-zA-Z0-9]+[_|\_|\.\-]?)*[\u4e00-\u9fa5aa-zA-Z0-9]+\.[\u4e00-\u9fa5aa-zA-Z]{2,3}$/);
+                if (!chackEmail || $(this).val().length < 5 || $(this).val().length > 50) {
+                    $(this).parents(".formRight").find('.erro').html("请输入正确的邮箱格式");
+                    $(this).val("")
+                }
+            }
+        }).focus(function(event) {
+            $(this).parents(".formRight").find('.erro').html("");
+        });
+        /*邮箱验证end*/
+        //点击短信验证码
+        $element.find('#mobileCode').on("click", function(event) {
+            _mobilePhoneCode($element.find("#phoneNumber").val(), $element.find(".img_checkCode").val())
+        });
+
+        function addAdress(id, area, ini) { //地址选择
+            $.ajax({
+                type: "GET",
+                url: lanh.apiHost + "service/region/list.html?parent_id=" + id,
+                dataType: "json",
+                success: function(result) {
+                    var $tmpl = "<option value='{id}'>{name}</option>";
+                    var $tmplSelect = "<option value='{id}' selected='selected'>{name}</option>";
+                    var $tmptop = "";
+                    if (area == 'city') {
+                        $tmptop = "<option value=0>请选择城市</option>"
+                    } else if (area == 'district') {
+                        $tmptop = "<option value=0>请选择区</option>"
+                    } else if (area == 'province') {
+                        $tmptop = "<option value=0>请选择省份</option>"
+                    }
+                    var template = [];
+                    template.push($tmptop);
+                    $.each(result.data.regions, function(index, el) {
+                        if (el.id == ini) {
+                            template.push($tmplSelect.replace("{name}", el.name).replace("{id}", el.id))
+                        } else {
+                            template.push($tmpl.replace("{name}", el.name).replace("{id}", el.id))
+                        }
+                    });
+                    $("#" + area).html(template.join(""));
+                },
+                error: function(result) {},
+                complete: function(result) {}
+            })
+        }
+
+        function _changeImgCode() { //图片验证码获取
+            $element.find("#changCode").attr("src", lanh.apiHost + "service/distribute/captcha.html?client_type=" + lanh.client_type + "&client_version=" + lanh.client_version + "&session_sid=" + lanh.session_sid() + "&" + Math.random());
+            $element.find(".img_checkCode").val("");
+        }
+
+        function _mobilePhoneCode(phoneNumber, ImgCode) { //手机验证码获取
+            if (phoneNumber == "") {
+                $element.find("#phoneNumber").parents(".formRight").find('.erro').html("请输入手机号码");
+                return false;
+            }
+            if (ImgCode == "") {
+                $element.find(".img_checkCode").parents(".formRight").find('.erro').html("请输入图片验证码");
+                return false;
+            }
+
+            function getPhonecode() {
+                $element.find('#mobileCode').attr("disabled", "disabled");
+                $.getJSON(lanh.apiHost + 'service/shop_info/list.html', function(shop_result) {
+                    if (shop_result.status == 0) {
+                         time = shop_result.data.MOBILE_CHECKCODE_TIMEOUT
+                        $.getJSON(lanh.apiHost + 'service/distribute/sendSms.html?mobile=' + phoneNumber + "&check_code=" + ImgCode, function(result) {
+                            lanh_modal.alert(result.msg);
+                            if (result.status == 0) {
+                                var timmer = setInterval(function() {
+                                    if (time == 0) {
+                                        $element.find('#mobileCode').attr("disabled", false);
+                                        $element.find("#mobileCode").val("发送短信验证码");
+                                        clearInterval(timmer);
+                                    } else {
+                                        time--;
+                                        $element.find("#mobileCode").val("重新发送(" + time + "秒" + ")");
+                                    }
+                                }, 1000)
+                            } else {
+                                $element.find('#mobileCode').attr("disabled", false);
+                                _changeImgCode();
+                            }
+
+                        });
+                    }
+                })
+            }
+
+            if (sendCodeSussecc == true) {
+                getPhonecode();
+            } else {
+                var url = typeUrl == 1 ? "service/distribute/distributor_exists.html?mobile=" : "service/distribute/mobile_exists.html?mobile=";
+                sendCodeCheck(url, getPhonecode);
+            }
+        }
+    }
+
+
+    var _applyDistrData = function($element, distributor_parent_id, showMobileCode, is_usercenter, callback) {
+        var distributor_name = $element.find(".useName").val(),
+            distributor_mobile = $element.find("#phoneNumber").val(),
+            distributor_mail = $element.find("#mailName").val(),
+            distributor_province_id = $element.find("#province").val(),
+            distributor_city_id = $element.find("#city").val(),
+            distributor_region_id = $element.find("#district").val(),
+            distributor_reason = $element.find(".applicationReason").val(),
+            mobile_checkcode = $element.find(".mobile_checkCode").val()
+
+        if (distributor_name == "") {
+            $element.find(".useName").parents(".formRight").find('.erro').html("请输入姓名");
+            return false;
+        }
+        if (showMobileCode == 1) {
+            if (mobile_checkcode == "") {
+                $element.find(".mobile_checkCode").parents(".formRight").find('.erro').html("请输入短信验证码");
+                return false;
+            }else{
+                if(time==0){
+                    lanh_modal.alert("短信验证码已过期，请重新获取");
+                     return false;
+                }
+            }
+        }
+        if (distributor_mobile == "") {
+            $element.find("#phoneNumber").parents(".formRight").find('.erro').html("请输入手机号码");
+            return false;
+        }
+        if (is_usercenter == 1) {
+            callback();
+        } else {
+            $.ajax({
+                type: "post",
+                url: lanh.apiHost + "service/distribute/enroll.html",
+                data: JSON.stringify({ distributor_name: distributor_name, distributor_mobile: distributor_mobile, distributor_mail: distributor_mail, distributor_province_id: distributor_province_id, distributor_city_id: distributor_city_id, distributor_region_id: distributor_region_id, distributor_reason: distributor_reason, distributor_parent_id: distributor_parent_id, mobile_checkcode: mobile_checkcode }),
+                dataType: "json",
+                success: function(result) {
+                    if (result.status == "0") {
+                        callback();
+                    } else {
+                        lanh_modal.alert(result.msg);
+                        window.location.reload();
+                    }
+                }
+            })
+        }
+    }
+    $.applyDistribution = {
+        applyUiBase:_applyUiBase,
+        applyDistr: _applyDistr,
+        applyDistrData: _applyDistrData
+    }
+})()

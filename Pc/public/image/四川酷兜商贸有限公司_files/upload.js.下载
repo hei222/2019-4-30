@@ -1,0 +1,205 @@
+﻿(function ($) {
+    var res = {
+        data: {
+            filename: {}
+        }
+    };
+    res.set = function (val) {
+        res.data = $.extend(res.data, val);
+    }
+    $.upLoadData = function () {
+        return res.data;
+    }
+    $.upLoadSetData = function (val) {
+        $.extend(res.data, val);
+    }
+    $.upLoad = function (options) {
+        var defaults = {
+            imgType: ["gif", "jpg", "png"],
+            maxSize: 1,
+            name: 'img',
+            before:function(file){},
+            success: function (file) {
+                lanh_modal.alert("上传成功");
+            },
+            error: function (msg,file) {
+                lanh_modal.alert(msg);
+            },
+            isSize: function (defaults) {
+                lanh_modal.alert('图片大小不能超过' + defaults + 'M');
+            },
+            isType:function(defaults){
+                //console.log(defaults);
+                lanh_modal.alert(defaults);
+            },
+            filename: {},
+            inputHtml:'+',
+            tmpurl: 'http://'+window.location.host+"/iframeUpload",
+            url: lanh.apiHost+'service/user/upload.html?client_type=web&session_sid='+($.cookie("session_sid")|| '')+'&type='
+        }
+        var opts = $.extend(defaults, options);
+        $('[triigerload]').wrap('<div class="uploadInput"></div>').parent().before('<div class="imagePreview" style="display:none"></div>');
+        $('[triigerload]').attr({
+            'triigerloads': function () { return $(this).attr('triigerload'); },
+            'name': opts.name
+        }).removeAttr("triigerload");
+        var form = $("<form></form>");
+        form.attr({
+            method: "post",
+            "class": "ajax_form",
+            enctype: "multipart/form-data"
+        });
+        $('[triigerloads]').wrap(form);
+        $('[triigerloads]').parent().append('<input type="hidden" name="tmpurl" value="' + opts.tmpurl + '" />');
+        $('[triigerloads]').parent().append("<div>" + opts.inputHtml + "</div>");
+        $('[triigerloads]').change(function () {
+            opts.before(this);
+            if (this.value != "") {
+                opts.length = $(this).attr('length');
+                opts.action = opts.url + $(this).attr('typename');
+                opts.triigerloads = $(this).attr('triigerloads');             
+                var upLoad=upLoadValidata(this);
+                //console.log(upLoad);
+                if(!upLoad) return false;
+                res.set({
+                    state: true,
+                    msg: '正在上传'
+                });
+                imagePreview(this);
+            }
+        });
+        //upLoadValidata
+        function upLoadValidata(file){
+            //判断类型
+            if (!RegExp("\.(" + opts.imgType.join("|") + ")$", "i").test(file.value.toLowerCase())) {
+                this.value = "";
+                opts.isType("图片类型必须是" + opts.imgType.join("，") + "中的一种");
+                res.set({
+                    state: true,
+                    msg: "图片类型必须是" + opts.imgType.join("，") + "中的一种"
+                });
+                return false;
+            }
+            return true;
+        }
+        //本地预览
+        function imagePreview(file) {                     
+            if (file.files && file.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (evt) {
+                    var _div = $('<div class="previewList"><div class="upload"><div></div><span></span></div><img class="img"/><div class="delUPIMG" data="'+opts.triigerloads+'" ></div></div>');
+                    opts._div = _div; 
+                    var img = _div.find('img')[0];                    
+                    var src = evt.target.result;
+                    img.src = src;
+                    create(img, _div, file);
+                }
+                reader.readAsDataURL(file.files[0]);
+            } else {
+                var _div = $('<div class="previewList"><div class="upload"><div></div><span></span></div><div class="img"></div><div class="delUPIMG"  data="'+opts.triigerloads+'"></div></div>');
+                opts._div = _div; 
+                var img = _div.find('.img')[0]; 
+                var src = getUrl($(file));              
+                $(img).css("filter", "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src='" + src + "')");
+                create(img, _div, file);
+            }
+        };
+        function create(img, _div, file) {
+            if (opts.change) {
+                res.set({
+                    img: img
+                });
+                opts.change();
+            } else {
+                $(file).parent().parent().parent().find('.imagePreview').show();
+                $(file).parent().parent().parent().find('.imagePreview').append(_div);
+                if ($(file).parent().parent().parent().find('.imagePreview .img').length >= opts.length) {
+                    $(file).parent().hide();
+                }
+            }           
+            upLoad(file,_div);
+        }
+        //上传图片
+        function upLoad(file,_div) {
+            var iframeName = "leunpha_iframe_v" + Math.random() * 100;
+            var iframe = $("<iframe name='" + iframeName + "' style='display:none'  id='" + iframeName + "'></iframe>");
+            var form = $(file).parent();
+            form.attr({
+                target: iframeName,
+                action: (opts.action+"&"+iframeName)
+            });
+            $(file).parent().parent().append(iframe);
+            form.submit();
+            if (iframe.attachEvent) {
+                iframe.attachEvent('load', loadfn);
+            } else {
+                iframe.load(loadfn);
+            }
+            function loadfn() {
+                function GetQueryString(name) {
+                    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+                    var r = iframe[0].contentWindow.location.href.replace(opts.tmpurl+"?data=",'');
+                    return decodeURIComponent(r);
+                }
+                var data ;
+                try{
+                   data= GetQueryString('data');
+                }catch (e){
+                   data="1|404"
+                }
+                 
+                data = data.split('|');
+                $(file).val('');
+                if (data[0] == "0") {
+                    if ($(file).parent().parent().parent().find('.imagePreview img').length >= opts.length) {
+                        $(file).parent().parent().hide();
+                    }
+                    opts.filename[opts.triigerloads]=opts.filename[opts.triigerloads] ? opts.filename[opts.triigerloads] : res.data.filename[opts.triigerloads]?res.data.filename[opts.triigerloads]:[];
+                    opts.filename[opts.triigerloads].push(data[1]);
+                    res.set({
+                        state: false,
+                        msg: '上传成功',
+                        filename: opts.filename
+                    });
+                    _div.find('.upload').remove();
+                    _div.find('.delUPIMG').show();
+                    opts.success(file);
+                } else {
+                    $(file).parent().show();
+                    $(file).parent().parent().show();                   
+                    res.set({
+                        state: false,
+                        msg: '上传失败'
+                    });
+                    _div.remove();
+                    opts.error(data[1],file);
+                }
+                iframe.remove();
+            }
+        }
+        function getUrl($this) {
+            try{
+                $this.select();
+                $this.blur();
+                var imgSrc = document.selection.createRange().text;
+                document.selection.empty();
+                return imgSrc;
+            }catch(e){ 
+                
+            }
+        }
+        $(document).on("click",".delUPIMG",function(){
+            var d=$(this).parent().index();
+            var arr=[]; 
+            for(var i=0;i<res.data.filename[$(this).attr('data')].length;i++){
+                if(i!=d)
+                   arr.push(res.data.filename[$(this).attr('data')][i])
+            }
+            res.data.filename[$(this).attr('data')]=arr;
+            $(this).parent().remove();
+            $('[triigerloads='+$(this).attr('data')+']').parent().show();
+            $('[triigerloads='+$(this).attr('data')+']').parent().parent().show();
+            $('[triigerloads='+$(this).attr('data')+']').val("");
+        });
+    }
+})(jQuery);

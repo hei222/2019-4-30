@@ -1,0 +1,61 @@
+.application .erro{
+	color:#f00;
+	line-height: 30px;
+}
+.application  .red_buttom{
+	padding: 6px 24px;
+	background: #d0040f;
+	border:1px solid #dd3c41;
+	box-shadow: 0 0 0 1px #a70a1d;
+	color:#fff;
+	border-radius:2px !important;
+}
+.application .write_buttom{
+    padding: 7px 22px;
+	background: #f7f7f7;
+	border:1px solid #aeaeae;
+	color:#aeaeae;
+	border-radius:2px !important;
+}
+.application label{
+	font-weight:normal;
+	line-height: 30px;
+}
+.application .required{
+	color:#dc102c;
+	margin-right:5px;
+}
+.application .textIn{
+	height: 30px;
+	border: 1px solid #cbcbcb;
+}
+.application  #changCode{
+	width: 98px;
+	margin-left:10px;
+	height: 30px;
+}
+.application  .address select{
+	width: 30%;
+	margin-right: 2%;
+	cursor: not-allowed;
+}
+.application  .address #province{
+	cursor: pointer;
+}
+.application  #mobileCode{
+	width: 98px;
+	margin-left:10px;
+	border:1px solid #cbcbcb;
+	background: #f3f3f3;
+	color:#787878;
+	font-size: 12px;
+	height: 30px;
+	line-height:30px;
+}
+
+.application .applicationReason{
+	height: 156px;
+	width: 100%;
+	border:1px solid #cbcbcb;
+	resize: none;
+}

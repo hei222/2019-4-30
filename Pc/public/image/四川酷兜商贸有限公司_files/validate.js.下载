@@ -1,0 +1,201 @@
+(function ($) {
+    var error={};
+    var message;
+    $.validate = function (options) {
+        var defaults = {
+            message: false
+        }
+
+        var opts = $.extend(defaults, options),
+            _attr,
+            _inputValue,
+            validate,
+            Info,
+            regex;
+        $(document).off("blur", "input,textarea").off("click", "[triigerkey]");
+        message = opts.message;
+        /* 正则表达式 */
+        regex = {
+            number: /^\-?[0-9]*\.?[0-9]+$/,
+            int: /^\+?[0-9][0-9]*$/,
+            decimal:/^\+?\d+\.?\d{0,2}$/,
+            chinese: /[\u4E00-\u9FA5\uF900-\uFA2D]/g, /* 匹配中文 */
+            keyworde: /^[\u4e00-\u9fa5A-Za-z0-9-_.\*\+\- \/]*$/,/*关键字验证*/
+            distributor_site_name:/^[\u4e00-\u9fa5A-Za-z0-9-_\- \/]*$/,/*店铺名称验证*/
+            trueName: /^[\u4e00-\u9fa5A-Za-z]*$/,/*真实姓名*/
+            phone: /^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/, /* 匹配手机号 */
+            //email: /^(?:\w+\.?)*\w+@(?:\w+\.)*\w+$/, /* 匹配email */
+            email: /^([\u4e00-\u9fa5aA-Za-z0-9]+[_|\_|\.\-&]*)+@([\u4e00-\u9fa5aa-zA-Z0-9]+[_|\_|\.\-]?)*[\u4e00-\u9fa5aa-zA-Z0-9]+\.[\u4e00-\u9fa5aa-zA-Z]{2,3}$/,
+            certificate: /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/, /* 匹配身份证 */
+            credit: /^\d{16}|\d{19}$/, /* 匹配银行卡 */
+            message: /^[\u4e00-\u9fa5A-Za-z0-9-]*$/,/*留言验证*/
+            evaluate: /^[\u4e00-\u9fa5A-Za-z0-9-\。\/\\\？\?\.\,\，\!\！\[\]\【\】\&\(\)\（\)\、\“\”\"\"\@]*$/  /* 评价内容验证 */
+        };
+        /* 提示信息%s表示元素属性message的值%v元素对应规则的值 */
+        Info = {
+            maxlength: '%s不能超过%v个字符',
+            max: "%s不能大于%v",
+            min: "%s不能小于%v",
+            required: '请输入%s',
+            samepass: '%s不同',
+            dataType: "%s格式不正确"
+        };
+        var InfoNew = {};
+        /* 验证规则如果满足的话返回true */
+        validate = {
+            dataType: function (inputValue, Value) {
+                if (!regex[Value].test(inputValue) && inputValue.length != 0)
+                    return true;
+            },
+            max: function (inputValue, Value) {
+                if (parseFloat(inputValue) > parseFloat(Value))
+                    return true;
+            },
+            min: function (inputValue, Value) {
+                if (parseFloat(inputValue) < parseFloat(Value))
+                    return true;
+            },
+            required: function (inputValue) {
+                if (inputValue.length == 0 || inputValue == '请输入关键词')
+                    return true;
+            },
+            samepass: function (inputValue, value) {//验证两个input值是否相同，value传入上一个input的ID
+                var vawen = $("#" + value).val();//获取值
+                var vames = $("#" + value).attr("message");
+                if (inputValue != vawen) {
+                    _attr.message += "与" + vames
+                    return true;
+                }
+            },
+            maxlength: function (inputValue, Value) {
+                if (inputValue.length > Value)
+                    return true;
+            },
+            getTime: function (value) {
+                var date = new Date(value);
+                return date.getTime();
+            }
+        }
+        $(document).on("blur", "input,textarea", function () {
+            error = {};
+            blurInput($(this));
+        }).on("click", "[triigerkey]", function () {
+            $(this).parents('form').validateSub();
+            $("html").trigger($(this).attr('triigerkey'), !error.message);
+            return false;
+        });
+        function blurInput(input) {
+            _attr = {};
+             var _required = input.attr('required'),
+                _dataType = input.attr('dataType'),
+                _samepass = input.attr('samepass'),
+                _max = input.attr('max'),
+                _min = input.attr('min'),
+                _maxlength = input.attr('maxlength'),
+                _lentype = input.attr('lentype');
+            if (input.attr('message')) _attr.message = input.attr('message');   
+            if (_required) { 
+                var _Arr = _required.split(',')
+                _attr.required = _Arr[0]
+                if(!!_Arr[1])
+                    InfoNew.required=_Arr[1]
+            } 
+            if (_dataType) { 
+                var _Arr = _dataType.split(',')
+                _attr.dataType = _Arr[0]
+                if(!!_Arr[1])
+                    InfoNew.dataType=_Arr[1]
+            } 
+            if (_samepass) { 
+                var _Arr = _samepass.split(',')
+                _attr.samepass = _Arr[0]
+                if(!!_Arr[1])
+                    InfoNew.samepass=_Arr[1]
+            } 
+            if (_max) { 
+                var _Arr = _max.split(',')
+                _attr.max = _Arr[0]
+                if(!!_Arr[1])
+                    InfoNew.max=_Arr[1]
+            } 
+            if (_min) { 
+                var _Arr = _min.split(',')
+                _attr.min = _Arr[0]
+                if(!!_Arr[1])
+                    InfoNew.min=_Arr[1]
+            } 
+            if (_maxlength) { 
+                var _Arr = _maxlength.split(',')
+                _attr.maxlength = _Arr[0]
+                if(!!_Arr[1])
+                    InfoNew.maxlength=_Arr[1]
+            } 
+            if (_lentype) { 
+                var _Arr = _lentype.split(',')
+                _attr.lentype = _Arr[0]
+                if(!!_Arr[1])
+                    InfoNew.lentype=_Arr[1]
+            } 
+            // if (input.attr('required')) _attr.required = input.attr('required');
+            // if (input.attr('dataType')) _attr.datatype = input.attr('dataType');
+            // if (input.attr('samepass')) _attr.samepass = input.attr('samepass');
+            // if (input.attr('max')) _attr.max = input.attr('max');
+            // if (input.attr('min')) _attr.min = input.attr('min');
+            // if (input.attr('maxlength')) _attr.maxlength = input.attr('maxlength');
+            // if (input.attr('message')) _attr.message = input.attr('message');
+            // if (typeof (input.attr('lentype')) != 'undefined') _attr.lentype = input.attr('lentype');
+            _inputValue = input.val();
+            if (typeof (_attr.lentype) != 'undefined')
+                _inputValue = _inputValue.replace(regex.chinese, "aa");
+            for (var o in _attr) {
+                var Ivalue = _inputValue,
+                    value = _attr[o];
+                if (_attr.datatype == "date") {
+                    Ivalue = validate.getTime(_inputValue);
+                    value = validate.getTime(_attr[o]);
+                }
+                if (validate[o] && validate[o](Ivalue, value) && value) {
+                    Info=$.extend(Info, InfoNew)
+                    var message = Info[(o)].replace("%s", _attr.message).replace("%v", _attr[o]);
+                    error['message'] = message;
+                    error['jq'] = input;
+                    
+                    if (!opts.message) {
+                        var data_class = input.attr('data-class'),
+                            className = "",
+                            _html;
+                        if (data_class)
+                            className = data_class;
+                        _html = $('<span class="ui-vali-err ' + className + '">' + message + '</span>');
+                        input.parent().append(_html);
+                        input.focus(function () {
+                            input.parent().find('.ui-vali-err').remove();
+                            input.removeClass('vali-err');
+                        });
+                        input.addClass('vali-err');
+                    } else {
+                        lanh_modal.alert(message);
+                        input.focus(function () {
+                            input.removeClass('vali-err');
+                        });
+                        input.addClass('vali-err');
+                    }
+                    return false;
+                }
+            }
+        }
+        $.validateErr = function () {           
+            return error;
+        }
+        $.fn.validateSub = function () {
+            $('.ui-vali-err').remove();
+            error = {}
+            for (var i = 0; i < $(this).find('[required]').length; i++) {
+                blurInput($(this).find('[required]').eq(i));
+            }
+        }
+    }
+})(jQuery);
+$.validate({
+            message: false
+        });

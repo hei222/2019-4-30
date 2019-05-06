@@ -1,0 +1,80 @@
+(function ($) {
+    $(document).on('click','.p_d_copund',function(){
+        var winW = $("body").width(),
+            winH = $("body").height();                 
+        var obj=$(this),
+            copundId = obj.attr('data-id'),
+            dataType = obj.attr('data-type'),
+            dataTitle = obj.attr('data-title'),
+            svolGoodsType = obj.attr('svol_goods_type'),
+            svolValue = obj.attr('svol_value'),
+            svolOrderLimitMoney = obj.attr('svol_order_limit_money'),
+            validTime = obj.attr('valid_time'),
+            svolUseConditional = obj.attr('svol_use_conditional'),
+            svolImageStyle = obj.attr('svol_image_style');
+        
+        var $copund = $('<div id="copund-show"><div>');
+        var $mask = $('<div><div>'),
+            $html = '',
+            tpl1 = svolGoodsType == 1?'<span class="limit">指定商品</span>':'<span class="limit">全部商品</span>',
+            tpl2 = dataType == 0?'￥'+svolValue:(dataType == 1?svolValue+'折': svolValue + '分'),
+            tpl3 = svolUseConditional == 'wap'?'仅限手机版商城使用':(svolUseConditional == 'web'?'仅限PC版商城使用':'手机版、PC版商城通用'),
+            bg = '',
+            tpl4 = parseInt(svolOrderLimitMoney) == 0?'':'<p class="text-center text2">( 满'+svolOrderLimitMoney+'使用 )</p>';
+
+        switch(svolImageStyle){
+            case '1': bg = '#fa4a57';break;
+            case '2': bg = '#efb153';break;
+            case '3': bg = '#42b857';break;
+            case '4': bg = '#7ecef4';break;
+        }
+
+        $html = '<div class="body" style="background:'+bg+'">'+
+                    '<div>'+
+                        '<span class="title" title="dataTitle">'+subStringChinese(dataTitle,12)+'</span>'+tpl1+'</div>'+
+                    '<p class="text1">'+ tpl2 +'</p>'+tpl4+''+
+                    '<p class="text-center text3">'+validTime+'</p>'+
+                    '<p class="text-center text4">'+tpl3+'</p>'+
+                '</div>'+
+                '<div class="btn-group" style="color:'+bg+'">'+
+                    '<span id="receive">立即领取</span>'+
+                '</div>';
+
+        $copund.html($html).css({
+            'border':'1px solid '+bg
+        });
+        $mask.css({
+            "width": winW,
+            "height": winH,
+            "position": "absolute",
+            "background-color": "rgba(0,0,0,0.3)",
+            "z-index": 1999,
+            "left": 0,
+            "top": 0
+        });
+        $('body').append($copund).append($mask);
+        $copund.find('#receive').unbind('click').bind('click',function(){
+            $.ajax({
+                url: lanh.apiHost + "service/shopping_volumes/get_coupon.html?svol_id=" + copundId,
+                type: 'GET',
+                dataType: "json",
+                success:function(result){
+                    if(result.status == 0){
+                        lanh_modal.alert('领取成功！');
+                    }else if(result.status == 1000){
+                        lanh_login.login_box("温馨提示");
+                    }else if(result.status == 2){
+                        lanh_modal.alert('已达到领取的数量限制,换一个领取吧！');
+                    }
+                    $copund.remove();
+                    $mask.remove();
+                }
+            })
+        });
+        $mask.unbind('click').bind('click',function(){
+            $(this).remove();
+            $copund.remove();
+        })
+    });
+    
+})(jQuery);

@@ -1,0 +1,96 @@
+.viewPicture {
+    margin: 8px 0!important;
+    padding: 0!important;
+}
+.viewPicture:after{
+    content: ' ';
+    display: table;
+    clear: both;
+}
+.viewPicture li{
+    float: left;
+    border: 2px solid #F0F0F0;
+    margin-right: 6px;
+    position: relative;
+    background-color: #FFF;
+    cursor: url(/public/images/viewPictureBg.png),url(/public/images/viewPictureSm.png),auto;
+    -webkit-transition: border-color .3s ease-out;
+    -moz-transition: border-color .3s ease-out;
+    -o-transition: border-color .3s ease-out;
+    transition: border-color .3s ease-out;
+    list-style: none;
+}
+.viewPicture li.active{
+        border:2px solid #e12222;
+        cursor: url(/public/images/viewPictureSm.png),url(/public/images/viewPictureBg.png),auto;
+}
+.viewPicture li:after{
+    content: "";
+    position: absolute;
+    left: 15px;
+    bottom: -8px;
+    margin-left: -3px;
+}
+.viewPicture li.active:after{
+    display: inline-block;
+    width: 0;height: 0;
+    font-size: 0;
+    line-height: 0;
+    border-top: 6px solid #e12222;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    _border-left-color: #fff;
+    _border-right-color: #fff;
+    _filter: chroma(color=#fff);
+}
+.viewPicture li img{
+    width: 36px;
+    height:36px;
+    float: left;
+}
+.viewPicture li:hover{
+    border:2px solid #e12222;
+}  
+.viewPictureStage{
+    padding: 5px;
+}  
+.viewPictureStage{
+    border: 1px solid #e6e6e6;
+    display: inline-block;
+    cursor: url(/public/images/viewPictureSm.png),url(/public/images/viewPictureBg.png),auto;
+    box-shadow: 0 0 3px #ccc;
+    overflow: hidden;
+}   
+.viewPictureStage p:after{
+    content: ' ';
+    display: table;
+    clear: both;
+}
+.viewPictureStage p{
+    min-width: 122px;
+    max-height: 400px;
+    max-width: 400px;
+    margin: 0;
+} 
+.viewPictureStage p img{
+    width: 100%;
+    height: 100%;
+    float: left;
+}
+
+#gift_img_box{
+    position: absolute;
+    padding: 10px;
+    border: 1px solid #e6e6e6;
+    box-shadow: 0 0 3px #ccc;
+    width: 320px;
+    background: #fff;
+    z-index: 99999;
+}
+#gift_img_box img{
+    width: 100%;  
+}
+#gift_img_box p{
+    margin: 0;
+    line-height: 32px;
+}

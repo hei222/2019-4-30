@@ -1,0 +1,91 @@
+﻿//获取url中的参数
+function getUrlParam(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+    var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+    if (r != null) return unescape(r[2]); return null; //返回参数值
+}
+/*
+* 时间戳转换
+*适用于Linux和Unix
+*$time需要转换的时间戳
+*/
+var timeStamp = function ($time, $format) {
+    var d = new Date(parseInt($time) * 1000);
+    if (!$format) $format = 'yyyy-MM-dd HH:mm:ss';
+    return $format.replace(/yyyy|MM|dd|HH|mm|ss/g, function (a) {
+        switch (a) {
+            case 'yyyy':
+                return fillZero(d.getFullYear());
+                break;
+            case 'MM':
+                return fillZero(d.getMonth() + 1);
+                break;
+            case 'mm':
+                return fillZero(d.getMinutes());
+                break;
+            case 'dd':
+                return fillZero(d.getDate());
+                break;
+            case 'HH':
+                return fillZero(d.getHours());
+                break;
+            case 'ss':
+                return fillZero(d.getSeconds());
+                break;
+        }
+    });
+    function fillZero(num) {
+        if (num < 10) num = "0" + num;
+        return num;
+    }
+}
+//截取字符为自定字符长度
+function subStringChinese(str, num) {
+    function getChineseLength(str) {
+        if (/[\u4E00-\u9FA5\uF900-\uFA2D]/.test(str))
+            return str.match(/[\u4E00-\u9FA5\uF900-\uFA2D]/g).length;
+        return 0;
+    }
+    var len = num + Math.round((num - getChineseLength(str.substring(0, num))) / 2);
+    if (str.replace(/[\u4E00-\u9FA5\uF900-\uFA2D]/g, 'aa').length > num * 2)
+        str = str.substring(0, len) + "...";
+    return str;
+}
+
+/*-----------------------------------精度计算--start--------------------------------*/
+//加法精度计算
+function actionAddition(arg1, arg2) {
+    var r1, r2, m;
+    try { r1 = arg1.toString().split(".")[1].length } catch (e) { r1 = 0 }
+    try { r2 = arg2.toString().split(".")[1].length } catch (e) { r2 = 0 }
+    m = Math.pow(10, Math.max(r1, r2))
+    return (arg1 * m + arg2 * m) / m
+}
+//减法精度计算
+function actionSubtraction(arg1, arg2) {
+    var r1, r2, m, n;
+    try { r1 = arg1.toString().split(".")[1].length } catch (e) { r1 = 0 }
+    try { r2 = arg2.toString().split(".")[1].length } catch (e) { r2 = 0 }
+    m = Math.pow(10, Math.max(r1, r2));
+    n = (r1 >= r2) ? r1 : r2;
+    return ((arg1 * m - arg2 * m) / m).toFixed(n);
+}
+//乘法精度计算
+function actionMultiplication(arg1, arg2) {
+    var m = 0, s1 = arg1.toString(), s2 = arg2.toString();
+    try { m += s1.split(".")[1].length } catch (e) { }
+    try { m += s2.split(".")[1].length } catch (e) { }
+    return Number(s1.replace(".", "")) * Number(s2.replace(".", "")) / Math.pow(10, m)
+}
+//除法精度计算
+function actionDivision(arg1, arg2) {
+    var t1 = 0, t2 = 0, r1, r2;
+    try { t1 = arg1.toString().split(".")[1].length } catch (e) { }
+    try { t2 = arg2.toString().split(".")[1].length } catch (e) { }
+    with (Math) {
+        r1 = Number(arg1.toString().replace(".", ""))
+        r2 = Number(arg2.toString().replace(".", ""))
+        return (r1 / r2) * pow(10, t2 - t1);
+    }
+}
+/*-----------------------------------精度计算--start--------------------------------*/

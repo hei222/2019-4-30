@@ -1,0 +1,99 @@
+/*样式1*/
+#page .pagination {
+    font-size: 12px;
+    margin: 0;
+    vertical-align: middle;
+}
+#page ul.page-skp {
+    padding: 0;
+    color: #666666;
+    display: inline-block;
+    margin: 0;
+    float: right;
+}
+#page ul.page-skp li {
+    display: inline-block;
+    vertical-align: middle;
+    padding-left: 5px;
+}
+#page ul.page-skp li  input{
+	color: #666666;
+    width: 34px;
+    height: 31px;
+    padding: 6px 0;
+}
+#page .pagination > li > a, #page .pagination > li > span{
+    color: #666666;
+}
+#page > .pagination > .active > a,
+#page .pagination > .active > a:focus,
+#page .pagination > .active > a:hover,
+#page .pagination > .active > span,
+#page .pagination > .active > span:focus,
+#page .pagination > .active > span:hover {
+    color:#fff;
+    background-color: #ee3312;
+    border-color: #ee3312;
+}
+/*样式2*/
+.page ul.pagination {
+    font-size: 12px;
+    margin: 0;
+    float:left;
+    vertical-align: middle;
+}
+.page ul.page-skp {
+    padding: 0;
+    color: #707070;
+   float:left;
+    margin: 0;
+  
+}
+.page ul.page-skp li {
+    display: inline-block;
+    vertical-align: middle;
+    padding-left: 5px;
+}
+.page ul.page-skp li  input{
+	color: #707070;
+    width: 34px;
+    height: 31px;
+    padding: 6px 0;
+}
+/*样式3*/
+.page1 .pagination {
+    font-size: 12px;
+    margin: 0;
+    vertical-align: middle;
+}
+.page1 ul.page-skp {
+    padding: 0;
+    color: #666666;
+    display: inline-block;
+    margin: 0;
+    float: right;
+}
+.page1 ul.page-skp li {
+    display: inline-block;
+    vertical-align: middle;
+    padding-left: 5px;
+}
+.page1 ul.page-skp li  input{
+	color: #666666;
+    width: 34px;
+    height: 31px;
+    padding: 6px 0;
+}
+.page1 .pagination > li > a, #page .pagination > li > span{
+    color: #666666;
+}
+.page1 > .pagination > .active > a,
+.page1 .pagination > .active > a:focus,
+.page1 .pagination > .active > a:hover,
+.page1 .pagination > .active > span,
+.page1 .pagination > .active > span:focus,
+.page1 .pagination > .active > span:hover {
+    color:#fff;
+    background-color: #ee3312;
+    border-color: #ee3312;
+}

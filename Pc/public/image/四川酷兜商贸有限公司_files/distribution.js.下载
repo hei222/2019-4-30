@@ -1,0 +1,129 @@
+(function() {
+    var _add = function(goods_ids, cb) {
+        $.getJSON(lanh.apiHost + "service/store/add_goods.html", {
+            goods_ids: goods_ids
+        }, function(res) {
+            if (goods_ids == '') {
+                lanh_modal.alert('请选择需要操作的商品');
+                return false;
+            }
+            if (res.status == 0) {
+                if (goods_ids.indexOf(',') < 0)
+                    lanh_modal.alert('加入我的店铺成功，请前往店铺查看！')
+                else
+                    lanh_modal.alert('已批量加入我的店铺');
+
+                if (cb) cb(res);
+            } else if (res.status == 14005) {
+                lanh_modal.alert('您还未进行店铺设置，请先进行店铺设置', function() {
+                    window.location.href = "/users/distribution/myshop?type=4&redirect=" + encodeURIComponent(window.location.href);
+                })
+            } else {
+                lanh_modal.alert(res.msg)
+            }
+        });
+    }
+
+    var _remove = function(goods_ids, cb) {
+        if (goods_ids == '') {
+            lanh_modal.alert('请选择需要操作的商品');
+            return false;
+        }
+        var msg = goods_ids.indexOf(',') < 0 ? "你确定要移除该商品？" : "你确定要批量移除该商品？"
+
+        lanh_modal.comfirm(msg, function() {
+            $.getJSON(lanh.apiHost + "service/store/remove_goods.html", {
+                goods_ids: goods_ids
+            }, function(res) {
+                if (res.status == 0) {
+                    if (goods_ids.indexOf(',') < 0)
+                        lanh_modal.alert('已移除该店铺商品');
+                    else
+                        lanh_modal.alert('已批量移除店铺商品');
+                    if (cb) cb(res);
+                } else {
+                    lanh_modal.alert(res.msg);
+                }
+            });
+        })
+
+
+    }
+
+    var _brand = function(item, cb) {
+        var _brandhtml = $('<div class="dis_brand" id="dis_brand"><div class="dis_brandbox"></div><div class="dis_brandhide dis_close"></div></div>');
+        var urlTpl = "http://www.jiathis.com/send/?webid=${webid}&url=http://baidu.com&title=232132"
+        var tpl = '<div class="dis_header"><span>商品推广</span><span class="dis_close pull-right">×</span></div>' +
+            '<div class="dis_brandcent">' +
+            '   <div class="pull-left">' +
+            '       <div class="imgbox"><img src="' + item.goods_original_img + '" onerror="this.src = \'/public/images/default_noImg02.png\'"></div>' +
+            '       <div class="phone"><div class="phoneBox">手机分享<img class="wap-eweima" src="/public/images/product/icon_eweima.jpg"></div></div>' +
+            '   </div>' +
+            '   <div class="pull-right">' +
+            '       <div class="goodsBox">' +
+            '           <p class="goods_name">' + item.goods_name + '<p>' +
+            '           <p>' + (item.goods_salepoint ? item.goods_salepoint : "") + '<p>' +
+            '           <div class="goodsBoxcon">' +
+            '               <p>本店价：<span class="red">' + item.goods_shop_price + '</span><p>' +
+            '               <p>' +
+            '                   月销量：<span class="pr">' + item.goods_month_sales_num + '</span>' +
+            '                   比率：<span class="red pr">' + item.goods_distribute_scale_new0 + '%</span>' +
+            '                   奖励：<span class="red pr">' + item.goods_distribute_price + '</span>' +
+            '               <p>' +
+            '           </div>' +
+            '       </div>' +
+            '       <div class="share">' +
+            '           <div>分享给好友赚奖励：</div>' +
+            '           <div class="sharebtn">' +
+            '               <a onclick="jiathis_sendto(\'qzone\');return false;" target="_blank" class="qzone"><img src="/public/images/qzone.png"></a>' +
+            '               <a onclick="jiathis_sendto(\'tsina\');return false;" target="_blank" class="tsina"><img src="/public/images/tsina.png"></a>' +
+            '               <a onclick="jiathis_sendto(\'weixin\');return false;" target="_blank" class="weixin"><img src="/public/images/weixin.png"></a>' +
+            '               <a onclick="jiathis_sendto(\'cqq\');return false;" target="_blank" class="cqq"><img src="/public/images/cqq.png"></a>' +
+            '               <a onclick="jiathis_sendto(\'copy\');return false;" class="copyLink"><img src="/public/images/copyLink.png"></a>' +
+            '           </div>' +
+            '       </div>' +
+            '   </div>' +
+            '</div>';
+
+        _brandhtml.find('.dis_brandbox').append(tpl);
+        $('body').append(_brandhtml);
+        /**
+         * 立即推广隐藏
+         */
+        _brandhtml.find('.dis_close').click(function() {
+            $('#dis_brand').remove();
+        })
+
+        _brandhtml.find('.copyLink').click(function() {
+            $('#dis_brand').remove();
+        })
+
+
+
+        $.getJSON(lanh.apiHost + "service/online_generation/generatio.html", {
+            distributer_id: window.lanh.userInfo().user.id,
+            goodsId: item.goods_id,
+            distributer_is_spread: 1
+        }, function(res) {
+            $('#dis_brand .phoneBox').append('<div class="generatio"><img src="' + res.data.url + '"></div>');
+        });
+
+        /*
+         *分享配置
+         */
+        window.jiathis_config = {
+            summary: "",
+            shortUrl: true,
+            hideMore: false,
+            url: "http://" +window.location.host + "/product/detail?goodsId=" + item.goods_id + "&distributer_is_spread=1&distributer_id=" + window.lanh.userInfo().user.id,
+            title: item.goods_name,
+            pic: item.goods_original_img
+        }
+    }
+
+    $.distribution = {
+        add: _add,
+        remove: _remove,
+        brand: _brand
+    }
+})()

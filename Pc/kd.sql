@@ -1,0 +1,15 @@
+SET NAMES UTF8;
+DROP DATABASE IF EXISTS xz;
+CREATE DATABASE kd CHARESET=UTF8;
+USE kd;
+
+/**用户信息**/
+CREATE TABLE kd_user(
+	uid  INT PRIMARY KEY AUTO_INCREMENT,
+	uname  VARCHAR(32),
+	upwd   VARCHAR(32),
+	email   VARCHAR(64),
+	phone   VARCHAR(16)
+)
+/* 添加两条测试数据*/
+INSERT INTO kd_user VALUES(null,'tom',md5('123'),'123456789@qq.com',12345678911);

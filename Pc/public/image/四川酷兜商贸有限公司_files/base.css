@@ -1,0 +1,285 @@
+﻿body {
+    font-family: 'Microsoft YaHei', 宋体, Tahoma, Helvetica, Arial, 宋体, sans-serif;
+    color: rgb(51, 51, 51);
+    min-width: 1280px;
+}
+    /*---------------------用户中心--start--------------------------*/
+    body.users {
+        background-color: #f7f7f7;
+        min-width: 1200px;
+    }
+
+        body.users .users-content {
+            min-height: 585px;
+            background-color: #fff;
+        }
+    /*---------------------用户中心--end--------------------------*/
+    body.standard {
+        width: 1200px;
+        margin: 0px auto;
+    }
+
+ul, ol, li {
+    list-style: none;
+}
+
+a, a:hover, a:visited {
+    text-decoration: none;
+    color: #333333;
+}
+
+button {
+    border-radius: 0px !important;
+}
+
+.col-padding-clear {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.col-padding-clear-left {
+    padding-left: 0px;
+}
+
+.col-padding-clear-right {
+    padding-right: 0px;
+}
+
+/*IE8的hack(hq)*/
+.col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12,
+.col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12,
+.col-lg-1, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-10, .col-lg-11, .col-lg-12 {
+    float: left\0;
+}
+
+.col-sm-1, .col-md-1, .col-lg-1 {
+    width: 8.33333%\0;
+}
+
+.col-sm-2, .col-md-2, .col-lg-2 {
+    width: 16.6667%\0;
+}
+
+.col-sm-3, .col-md-3, .col-lg-3 {
+    width: 25%\0;
+}
+
+.col-sm-4, .col-md-4, .col-lg-4 {
+    width: 33.3333%\0;
+}
+
+.col-sm-5, .col-md-5, .col-lg-5 {
+    width: 41.6667%\0;
+}
+
+.col-sm-6, .col-md-6, .col-lg-6 {
+    width: 50%\0;
+}
+
+.col-sm-7, .col-md-7, .col-lg-7 {
+    width: 58.3333%\0;
+}
+
+.col-sm-8, .col-md-8, .col-lg-8 {
+    width: 66.6667%\0;
+}
+
+.col-sm-9, .col-md-9, .col-lg-9 {
+    width: 75%\0;
+}
+
+.col-sm-10, .col-md-10, .col-lg-10 {
+    width: 83.3333%\0;
+}
+
+.col-sm-11, .col-md-11, .col-lg-11 {
+    width: 91.6667%\0;
+}
+
+.col-sm-12, .col-md-12, .col-lg-12 {
+    width: 100%\0;
+}
+
+.col-lg-offset-1 {
+    margin-left: 8.33333%\0;
+}
+
+.col-lg-offset-2 {
+    margin-left: 16.6667%\0;
+}
+
+.col-lg-offset-3 {
+    margin-left: 25%\0;
+}
+
+.col-lg-offset-4 {
+    margin-left: 33.3333%\0;
+}
+
+.col-lg-offset-5 {
+    margin-left: 41.6667%\0;
+}
+
+.col-lg-offset-6 {
+    margin-left: 50%\0;
+}
+
+.col-lg-offset-7 {
+    margin-left: 58.3333%\0;
+}
+
+.col-lg-offset-8 {
+    margin-left: 66.6667%\0;
+}
+
+.col-lg-offset-9 {
+    margin-left: 75%\0;
+}
+
+.col-lg-offset-10 {
+    margin-left: 83.3333%\0;
+}
+
+.col-lg-offset-11 {
+    margin-left: 91.6667%\0;
+}
+
+.col-lg-offset-12 {
+    margin-left: 100%\0;
+}
+
+.wrap {
+    width: 1200px;
+    margin: auto;
+    float: none !important;
+}
+
+.full {
+    width: 100%;
+}
+
+/*颜色定义*/
+/*红色*/
+.red-icon {
+    color: #E5514d;
+}
+
+.red-icon-before:before {
+    color: #E5514d;
+}
+
+.red-price {
+    color: #E41F1D;
+}
+
+.red-normal {
+    color: #e4393c !important;
+}
+/*绿色文字*/
+.green-normal {
+    color: #76b95a;
+}
+/*灰色标题*/
+.gray-title {
+    color: #222;
+}
+/*灰色文字*/
+.gray-normal {
+    color: #666;
+}
+/*灰色次要文字*/
+.gray-assist {
+    color: #999;
+}
+/*灰色背景*/
+.gray-bg-f4 {
+    background-color: #f4f4f4;
+}
+/*黄色按钮*/
+.yellow-icon {
+    color: #ff9c34;
+}
+/*蓝色文字*/
+.blue-normal {
+    color: #337ab7;
+}
+/*棕色文字*/
+.brown-normal {
+    color: #a4744c;
+}
+/*灰色下划线*/
+.bd-gray-weak {
+    border-color: #d6d6d6;
+}
+
+/*扩展bootstrap按钮样式 白色背景+红色字体按钮样式*/
+.btn-default-red {
+    color: #e4393c;
+    background-color: #fff;
+    border-color: #e4393c;
+}
+
+    .btn-default-red:focus,
+    .btn-default-red.focus {
+        color: #e4393c;
+        background-color: #fff5f5;
+        border-color: #e4393c;
+    }
+
+    .btn-default-red:hover {
+        color: #e4393c;
+        background-color: #fff5f5;
+        border-color: #e4393c;
+    }
+
+    .btn-default-red:active,
+    .btn-default-red.active,
+    .open > .dropdown-toggle.btn-default-red {
+        color: #e4393c;
+        background-color: #fff5f5;
+        border-color: #e4393c;
+    }
+
+        .btn-default-red:active:hover,
+        .btn-default-red.active:hover,
+        .open > .dropdown-toggle.btn-default-red:hover,
+        .btn-default-red:active:focus,
+        .btn-default-red.active:focus,
+        .open > .dropdown-toggle.btn-default-red:focus,
+        .btn-default-red:active.focus,
+        .btn-default-red.active.focus,
+        .open > .dropdown-toggle.btn-default-red.focus {
+            color: #e4393c;
+            background-color: #ffe8e8;
+            border-color: #e4393c;
+        }
+
+    .btn-default-red:active,
+    .btn-default-red.active,
+    .open > .dropdown-toggle.btn-default-red {
+        background-image: none;
+    }
+
+    .btn-default-red.disabled:hover,
+    .btn-default-red[disabled]:hover,
+    fieldset[disabled] .btn-default-red:hover,
+    .btn-default-red.disabled:focus,
+    .btn-default-red[disabled]:focus,
+    fieldset[disabled] .btn-default-red:focus,
+    .btn-default-red.disabled.focus,
+    .btn-default-red[disabled].focus,
+    fieldset[disabled] .btn-default-red.focus {
+        background-color: #fff;
+        border-color: #e4393c;
+    }
+
+    .btn-default-red .badge {
+        color: #fff;
+        background-color: #e4393c;
+    }
+    .right_sidebar{
+        position: fixed;
+        top:0;
+        right: 0;
+        z-index: 91;
+    }

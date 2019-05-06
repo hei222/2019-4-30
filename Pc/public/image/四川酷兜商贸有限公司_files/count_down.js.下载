@@ -1,0 +1,79 @@
+﻿/*
+* 倒计时
+*$data倒计时的时间
+*$countDiv承载倒计时的容器
+*/
+(function ($) {
+    $.count_dowm = function ($data, $countDiv, $isCountTime) {
+        getSysData(actionTime);
+        function actionTime(nowTime) {
+            var now = nowTime;
+            function ShowCountDown() {
+                var nData = new Date($data * 1000);
+                //var now = new Date();
+                var ts = parseInt((nData.getTime() - now * 1000) / 1000);
+                now++;
+                var dateLeft = 0;
+                var hourLeft = 0;
+                var minuteLeft = 0;
+                var secondLeft = 0;
+                if (ts < 0) {
+                    ts = 0;
+                    temp = "";
+                } else {
+                    dateLeft = parseInt(ts / 86400);
+                    ts = ts - dateLeft * 86400;
+                    hourLeft = parseInt(ts / 3600);
+                    ts = ts - hourLeft * 3600;
+                    minuteLeft = parseInt(ts / 60);
+                    secondLeft = ts - minuteLeft * 60;
+                }
+                if (hourLeft < 10) hourLeft = '0' + hourLeft;
+                if (minuteLeft < 10) minuteLeft = '0' + minuteLeft;
+                if (secondLeft < 10) secondLeft = '0' + secondLeft;
+                if (dateLeft > 0)
+                    dateLeft = dateLeft + "天";
+                else
+                    dateLeft = "";
+                if (hourLeft > 0)
+                    hourLeft = hourLeft + "小时";
+                else {
+                    if (dateLeft != "")
+                        hourLeft = "00小时";
+                    else
+                        hourLeft = "";
+                }
+                if (minuteLeft > 0)
+                    minuteLeft = minuteLeft + "分钟";
+                else {
+                    if (dateLeft != "" || hourLeft != "")
+                        minuteLeft = "00分钟";
+                    else
+                        minuteLeft = "";
+                }
+                if (secondLeft > 0)
+                    secondLeft = secondLeft + "秒";
+                else {
+                    if (dateLeft != "" || hourLeft != "" || minuteLeft != "")
+                        secondLeft = "00秒";
+                    else
+                        secondLeft = "";
+                }
+                if(!$isCountTime){
+                   temp = dateLeft + hourLeft + minuteLeft + secondLeft; 
+                }else{
+                   temp = dateLeft + hourLeft + minuteLeft;
+                }
+                $countDiv.html(temp);
+                if (temp == '') {
+                    window.location.reload();
+                }
+            }
+            if(!$isCountTime){
+                var timmer = setInterval(ShowCountDown, 1000);
+            }else{
+                $countDiv.html(window.timeSwitch($data));
+            } 
+        }
+    }
+})($);

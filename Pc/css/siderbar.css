@@ -1,0 +1,231 @@
+.siderbar_wrap{
+    height: 100%;
+    position: fixed;
+    top: 0px;
+    right: -280px;
+    z-index: 99999999999999999;
+    background: #000;
+}
+.siderbar_state{
+    height: 100%;
+    padding-top:70px;
+    width:40px;
+    float:left;
+    background: #000;
+}
+.siderbar_nav{
+    height: 100%;
+    line-height: 40px;
+    position: relative;
+    color:#fff;
+}
+.siderbar_nav_user,.siderbar_nav_coupon,.siderbar_nav_house,.siderbar_nav_footprint,.siderbar_nav_feedback,.siderbar_nav_return{
+    position: relative;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    padding: 5px;
+    background: #000;
+}
+.siderbar_nav_user>span,.siderbar_nav_coupon>span,.siderbar_nav_house>span,.siderbar_nav_footprint>span,.siderbar_nav_feedback>span,.siderbar_nav_return>span{
+    position: absolute;
+    display: block;
+    width: 100px;
+    line-height: 40px;
+    left: 0px;
+    top: 0px;
+    z-index: -1;
+    text-align: center;
+    background: #b61d1d;
+
+}
+.siderbar_nav_user>div,.siderbar_nav_coupon>div,.siderbar_nav_house>div,.siderbar_nav_footprint>div,.siderbar_nav_feedback>div,.siderbar_nav_return>div{
+    width:30px;
+    height:30px;
+    background:url("../public/image/rightSidebar.png") no-repeat;
+    overflow: hidden;
+}
+.siderbar_nav_user>div{
+ background-position: -5px 5px;
+}
+.siderbar_nav_shop{
+    position: relative;
+    cursor: pointer;
+    width: 40px;
+    height: 108px;
+    padding: 5px;
+    background: #000;
+    text-align: center;
+    line-height: 20px;
+    border-top: 1px solid #fff;
+    border-bottom: 1px solid #fff;
+}
+.siderbar_nav_shop>div{
+    width:30px;
+    height:30px;
+    background:url("../public/image/rightSidebar.png") no-repeat -5px -35px;
+    overflow: hidden;
+}
+.siderbar_nav_shop>span{
+    display: block;
+    width: 20px;
+    margin: 0px auto;
+}
+.siderbar_nav_coupon>div{
+    background-position:-5px -75px ;
+}
+.siderbar_nav_house>div{
+    background-position:-5px -115px ;
+}
+.siderbar_nav_footprint>div{
+    background-position:-5px -155px ;
+}
+.siderbar_nav_feedback{
+    position:absolute;
+    bottom: 40px;
+}
+.siderbar_nav_feedback>div{
+    background-position: -5px -195px;
+}
+.siderbar_nav_return{
+    position: absolute;
+    bottom: 0px;
+}
+.siderbar_nav_return>div{
+    background-position: -5px -235px;
+}
+
+.siderbar_tabs{
+    height: 100%;
+    width: 280px;
+    float: left;
+    background: #f3f3f3;
+
+}
+.siderbar_tabs_title{
+    height: 38px;
+    line-height: 38px;
+    width: 100%;
+    margin-bottom: 10px;
+    background: #f3f3f3;
+    color: #666;
+}
+.siderbar_tabs_title>img{
+    float: left;
+    margin: 15px 90px 0 8px;
+    cursor: pointer;
+}
+.siderbar_tabs_title>div{
+    height: 38px;
+    float: left;
+    margin: 0 auto;
+    line-height: 38px;
+}
+.siderbar_tabs_content{
+    background: #fff;
+    padding: 10px 0;
+}
+.siderbar_tabs_login{
+    padding: 0 10px;
+}
+.login_ti{
+    height: 30px;
+    line-height: 30px;
+    color: #e4393c;
+    text-align: center;
+    border: 1px dashed #e4393c;
+    padding-left: 5px;
+}
+.login_user,.login_pwd{
+    margin: 15px 0;
+    position: relative;
+    display: table;
+    border-collapse: separate;
+}
+.login_user>div,.login_pwd>div{
+    display: table-cell;
+    width:1%;
+    padding: 1px 12px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1;
+    color: #555;
+    text-align: center;
+    background-color: #eee;
+    border: 1px solid #ccc;
+    border-right:0;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    vertical-align: middle;
+}
+.login_user>div>img,.login_pwd>div>img{
+    width:20px;
+    height: 20px;
+}
+.login_user>input,.login_pwd>input{
+    display: table-cell;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    position: relative;
+    z-index: 2;
+    float: left;
+    width: 100%;
+    margin-bottom: 0;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    border: 1px solid #ccc;
+}
+.login_ji{
+
+    padding:0 0 10px 20px ;
+}
+.login_ji>input{
+    position: relative;
+    top:2px;
+    left:0;
+}
+.login_ji>span{
+    padding-left: 8px;
+    cursor:default;
+}
+.login_ji>a{
+    position:relative;
+    top:0;
+    left:70px;
+}
+.login_login{
+    margin-bottom:15px;
+    text-align: center;
+}
+.login_login>button{
+    width: 100%;
+    border: none;
+    outline: 1px solid #cb2a2d;
+    color: #fff;
+    background-color: #d9534f;
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.login_zu>a{
+    float: right;
+    padding:0 30px 12px 0 ;
+    color: #e4393c;
+}

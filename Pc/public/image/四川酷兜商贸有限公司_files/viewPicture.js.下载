@@ -1,0 +1,38 @@
+(function ($) {
+    $(document).on('click','.viewPicture li',function(){                 
+        var obj=$(this);
+        $(".viewPictureStage").remove();
+        $('.viewPicture').find('.active').removeClass('active');
+        obj.addClass('active');
+        obj.parent().after("<div class='viewPictureStage'><p><img src="+obj.find('img').attr('src')+"></p></div>");                
+    });
+    $(document).on('click','.viewPicture li.active',function(){
+        var obj=$(this);
+        obj.removeClass('active');
+        obj.parent().next().remove();
+    });
+    $(document).on('click','.viewPictureStage',function(){
+        var obj=$(this);
+        obj.prev().find('.active').removeClass('active');
+        obj.remove();
+    });
+
+    $(document).on('mouseenter','.gift_img',function(){
+        
+        var _top=$(this).offset().top+$(this).height()+10;
+        var _left=$(this).offset().left;
+        var _dataSrc=$(this).attr('data-src');
+        var _dataPrice="￥"+$(this).attr('data-price');
+        var _dataName=$(this).attr('data-name');
+        var _html=$("<div id='gift_img_box'><img src="+_dataSrc+"><p>"+_dataName+"</p><p class='red-price'>"+_dataPrice+"</p></div>");
+        _html.css({
+            top:_top+"px",
+            left:_left+"px"
+        })
+        $('body').append(_html)
+    });
+
+    $(document).on('mouseleave','.gift_img',function(){
+        $('#gift_img_box').remove();
+    });
+})(jQuery);

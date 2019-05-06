@@ -1,0 +1,96 @@
+.siderbar_wrap{
+    height: 100%;
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    z-index: 99999999999999999;
+    background: #000;
+}
+.siderbar_state{
+    height: 100%;
+    padding-top:70px;
+    width:40px;
+    float:left;
+    background: #000;
+}
+.siderbar_nav{
+    height: 100%;
+    line-height: 40px;
+    position: relative;
+    color:#fff;
+}
+.siderbar_nav_user,.siderbar_nav_coupon,.siderbar_nav_house,.siderbar_nav_footprint,.siderbar_nav_feedback,.siderbar_nav_return{
+    position: relative;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    padding: 5px;
+    background: #000;
+}
+.siderbar_nav_user>span,.siderbar_nav_coupon>span,.siderbar_nav_house>span,.siderbar_nav_footprint>span,.siderbar_nav_feedback>span,.siderbar_nav_return>span{
+    position: absolute;
+    display: block;
+    width: 100px;
+    line-height: 40px;
+    left: 0px;
+    top: 0px;
+    z-index: -1;
+    text-align: center;
+    background: #b61d1d;
+
+}
+.siderbar_nav_user>div,.siderbar_nav_coupon>div,.siderbar_nav_house>div,.siderbar_nav_footprint>div,.siderbar_nav_feedback>div,.siderbar_nav_return>div{
+    width:30px;
+    height:30px;
+    background:url("../public/image/rightSidebar.png") no-repeat;
+    overflow: hidden;
+}
+.siderbar_nav_user>div{
+ background-position: -5px 5px;
+}
+.siderbar_nav_shop{
+    position: relative;
+    cursor: pointer;
+    width: 40px;
+    height: 108px;
+    padding: 5px;
+    background: #000;
+    text-align: center;
+    line-height: 20px;
+    border-top: 1px solid #fff;
+    border-bottom: 1px solid #fff;
+}
+.siderbar_nav_shop>div{
+    width:30px;
+    height:30px;
+    background:url("../public/image/rightSidebar.png") no-repeat -5px -35px;
+    overflow: hidden;
+}
+.siderbar_nav_shop>span{
+    display: block;
+    width: 20px;
+    margin: 0px auto;
+}
+.siderbar_nav_coupon>div{
+    background-position:-5px -75px ;
+}
+.siderbar_nav_house>div{
+    background-position:-5px -115px ;
+}
+.siderbar_nav_footprint>div{
+    background-position:-5px -155px ;
+}
+.siderbar_nav_feedback{
+    position:absolute;
+    bottom: 40px;
+}
+.siderbar_nav_feedback>div{
+    background-position: -5px -195px;
+}
+.siderbar_nav_return{
+    position: absolute;
+    bottom: 0px;
+}
+.siderbar_nav_return>div{
+    background-position: -5px -235px;
+}

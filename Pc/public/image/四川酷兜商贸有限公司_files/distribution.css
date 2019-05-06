@@ -1,0 +1,124 @@
+.dis_brand  .dis_brandhide{
+	position: fixed;
+	top:0;
+	right: 0;
+	left: 0;
+	bottom: 0;
+	background: rgba(0,0,0,.5);
+	z-index: 99999999;
+}
+
+.dis_brand .dis_brandbox{
+	width: 880px;
+	height: 384px;
+	position: fixed;
+	top:50%;
+	left: 50%;
+	margin-left: -440px;
+	margin-top:-192px;
+	background: #fff;
+	z-index: 999999999;
+	color: #666;
+}
+.dis_brand .dis_brandcent{
+	padding: 20px;
+	height: 100%;
+}
+.dis_brand .dis_brandcent .pull-left{
+	height: 100%;
+	width: 276px;	
+	
+}
+.dis_brand .dis_brandcent .pull-left .imgbox{
+	height: 280px;
+	line-height: 280px;
+	overflow: hidden;
+}
+
+.dis_brand .dis_brandcent .pull-left .phone{
+	margin-top:15px;
+}
+
+.dis_brand .dis_brandcent .pull-left .imgbox img{
+	width: 100%;
+}
+
+.dis_brand .dis_brandcent .pull-right{
+	height: 100%;
+	width: 540px;
+}
+.dis_brand .share div{
+	display: inline-block;
+}
+
+.dis_brand .share{
+	height: 52px;
+	line-height: 52px;
+	margin-top:15px;
+}
+
+.dis_brand .share  .sharebtn a{
+	display: inline-block;
+	width: 52px;
+	height: 52px;
+	margin-left: 15px;
+}
+.dis_brand .share  .sharebtn a img{
+	width: 100%;
+}
+.dis_brand .goods_name{
+	color: #333;
+	font-weight: bold;
+}
+.dis_brand .goodsBox{
+	height: 248px;
+	overflow: hidden;
+}
+
+.dis_brand .goodsBoxcon{
+	background: #f7f7f7;
+	padding: 15px;
+}
+
+.dis_brand  .red{
+	color: #d10311;
+}
+.dis_brand .pr{
+	padding-right: 15px;
+}
+
+.dis_brand  .generatio{
+	display: none;
+	width: 120px;
+	height: 120px;
+	background: #ccc;
+	position: absolute;
+	top:-120px;
+	left:0;
+}
+
+.dis_brand  .generatio img{
+	width: 100%;
+}
+
+.dis_brand .phoneBox{
+	position: relative;
+	display: inline-block;
+}
+
+.dis_brand .phoneBox:hover .generatio{
+	display: block;
+}
+
+
+.dis_header{
+	height: 30px; 
+    line-height: 30px;
+    background-color: #f3f3f5;
+    padding: 0 10px;
+}
+
+.dis_header .dis_close{
+	padding: 0 10px;
+	cursor: pointer;
+}

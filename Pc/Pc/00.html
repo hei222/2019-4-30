@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="js/jquery-1.11.3.js"></script>
+    <title>Document</title>
+    <style>
+    *{
+    padding: 0;
+    margin: 0;
+}
+
+.slideImageContainer{
+    position: relative;
+    width: 1200px;
+    height: 300px;
+    margin: 0 auto;
+    border: solid 1px red;
+    overflow: hidden;
+}
+.slideImageLists{
+    position: absolute;
+    left: -1800px;
+    top: 0;
+    width: 5400px;
+    height: 300px;
+}
+.slideImageLists img{
+    width: 600px;
+    height: 300px;
+}
+.slideLeftBtn,.slideRightBtn{
+    position: absolute;
+    font-family: "iconfont";
+    font-size: 60px;
+    top: 120px;
+    color: #191f25;
+    opacity: 0.3;
+    cursor: pointer;
+
+    user-select: none;  
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+.slideLeftBtn:hover,.slideRightBtn:hover{
+    opacity: 0.6;
+}
+.slideLeftBtn{
+    left: 10px;
+}
+.slideRightBtn{
+    right: 10px;
+}
+    </style>
+</head>
+<body>
+    <div class="slideImageContainer">
+        <div class="slideImageLists">
+         
+           
+            <img src="1.png" />
+            <img src="3.png" />
+            
+            <img src="2.png" />
+            <img src="1.png" />
+            <img src="3.png" />
+           
+            <img src="2.png" />
+            <img src="1.png" />
+           
+        </div>
+        <div class="slideLeftBtn" id="slideLeftBtn">&#xe60f;</div>
+        <div class="slideRightBtn" id="slideRightBtn">&#xe60e;</div>
+    </div>
+    <script>
+    var slideIndex = 2;   //记录初始图片的下标( 默认最初展示第四张图片，下标从0开始，所以初始值为3 )
+//左边按钮的点击事件
+// $("#slideLeftBtn").on("click",function(){
+//     // 点击左按钮的时候想要显示当前图片的前一张，所以slideIndex值要减去1
+//     slideIndex--;
+//     // animateLength表示想要让slideImageLists移动到什么位置，slideImageLists 的位置由 left属性来控制
+// 　　 var animateLength = slideIndex * (-600) + "px";
+//     $(".slideImageLists").animate({"left":animateLength},"slow",function(){
+//         // animate的回调函数(即执行完动画之后才会执行函数里面的内容)
+//         if(slideIndex <= 0){
+//             $(".slideImageLists").css({"left":"-1800px"});
+//             slideIndex = 3;
+//         }
+//     });
+// })
+//右边按钮的点击事件
+$("#slideRightBtn").on("click",function(){
+    // 点击右按钮的时候想要显示当前图片的后一张，所以slideIndex值要加上1
+    slideIndex++;
+    var animateLength = slideIndex * (-600) + "px";
+    $(".slideImageLists").animate({"left":animateLength},"slow",function(){
+　　　　　if(slideIndex >= 5){
+            $(".slideImageLists").css({"left":"-1800px"});
+            slideIndex = 2;
+        }
+    })
+})
+var isClickable = true;   // 是否可点击，默认可点击
+var slideIndex = 2;   
+$("#slideLeftBtn").on("click",function(){
+    if(isClickable == true){
+        slideIndex--;
+    }else{
+        return false;
+    }
+    isClickable = false;
+    var animateLength = slideIndex * (-600) + "px";
+    $(".slideImageLists").animate({"left":animateLength},"slow",function(){
+        isClickable = true;
+        if(slideIndex <= 0){
+            $(".slideImageLists").css({"left":"-1800px"});
+            slideIndex = 2;
+        }
+    });
+})
+function aa (){
+    if(isClickable == true){
+        slideIndex--;
+    }else{
+        return false;
+    }
+    isClickable = false;
+    var animateLength = slideIndex * (-600) + "px";
+    $(".slideImageLists").animate({"left":animateLength},"slow",function(){
+        isClickable = true;
+        if(slideIndex <= 0){
+            $(".slideImageLists").css({"left":"-1800px"});
+            slideIndex = 2;
+        }
+    });
+}
+
+    setInterval(function(){
+        aa()
+        console.log(22)
+    },100)
+
+    </script>
+</body>
+</html>

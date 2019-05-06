@@ -1,0 +1,103 @@
+﻿
+var lanh_modal = {
+    modal: function (title, content, width, height) {
+        var msgHtml = '<div class="modal" id="mymodal"  style="width:' + width + 'px;" data-backdrop="static" data-keyboard="false">' +
+                                    '<div class="modal-dialog" style="width:' + width + 'px;">' +
+                                        '<div class="modal-content">' +
+                                         '   <div class="modal-header">' +
+                                          '      <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>' +
+                                           '     <h4 class="modal-title">' + title + '</h4>' +
+                                            '</div>' +
+                                            '<div class="modal-body" style="height:' + (height - 10) + 'px;">' +
+                                            content +
+                                            '</div>' +
+                                        '</div>' +
+                                    '</div>' +
+                                '</div>';
+        var $alert = $(msgHtml);
+        // $alert.modal("toggle");
+        $alert.modal({ backdrop: 'static', keyboard: false });
+    },
+    modalClose: function () {
+        $(".modal").modal("hide");
+    },
+    alert: function (message,callback) {
+        var msgHtml = '<div class="alert prompt"  role="alert">' + message + '</div>';
+        var $alert = $(msgHtml);
+        $("body").append($alert);
+        //console.log(self.innerWidth);
+        //console.log(document.body.scrollWidth);
+        var divWidth = $alert.width(), browserWidth = document.body.scrollWidth, divLeft = (browserWidth - divWidth) / 2;
+        $(".prompt").attr("style", "left:" + divLeft + "px;top:200px;z-index:2000");
+        setTimeout(function () {
+            $alert.alert('close');
+            if(callback)
+                callback();
+        }, 2000);
+    },
+
+    //modal: function (message) {
+    //    var msgHtml = '<div class="modal" id="mymodal">'+
+    //                                '<div class="modal-dialog">'+
+    //                                    '<div class="modal-content">'+
+    //                                     '   <div class="modal-header">'+
+    //                                      '      <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>'+
+    //                                       '     <h4 class="modal-title">模态弹出窗标题</h4>'+
+    //                                        '</div>'+
+    //                                        '<div class="modal-body">'+
+    //                                         '   <p>模态弹出窗主体内容</p>'+
+    //                                        '</div>'+
+    //                                        '<div class="modal-footer">'+
+    //                                         '   <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>'+
+    //                                          '  <button type="button" class="btn btn-primary">保存</button>'+
+    //                                        '</div>'+
+    //                                    '</div>'+
+    //                                '</div>'+
+    //                            '</div>';
+    //        var $alert = $(msgHtml);
+    //        $alert.modal("toggle");
+    //        //$("body").append($alert);
+    //        //setTimeout(function () {
+    //        //    $alert.alert('close');
+    //        //}, 1000);
+    //}
+    comfirm: function (message, callback) {
+        var winW = $("body").width(),
+            winH = $("body").height();
+        message = message || '';
+
+        var $msgObj = $('<div class="propup-comfirm"></div>'),
+            $mask = $('<div></div>'),
+            msgHtml = '<div class="header">' +
+                      '<span>温馨提示</span>' +
+                      '<span class="close">×</span></div>' +
+                      '<div class="content">' +
+                      '<p>' + message + '</p>' +
+                      '<div class="btn-group">' +
+                      '<button class="ok">确定</button><button class="close">取消</button>' +
+                      '</div></div>';
+
+        $msgObj.html(msgHtml);
+        $mask.css({
+            "width": winW,
+            "height": winH,
+            "position": "absolute",
+            "background-color": "rgba(0,0,0,0.3)",
+            "z-index": 1999,
+            "left": 0,
+            "top": 0
+        })
+        $("body").append($msgObj).append($mask);
+
+        $msgObj.find(".close").click(function () {
+            $msgObj.remove();
+            $mask.remove();
+        })
+
+        $msgObj.find(".ok").click(function () {
+            $msgObj.remove();
+            $mask.remove();
+            !!callback && callback();
+        })
+    }
+};

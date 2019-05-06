@@ -1,0 +1,26 @@
+(function ($) {
+    $.pay_modal = function (url, id) {
+        var $payHtml = '<div class="pay_modal"><div class="paycontent">您确定要立即支付吗？</div><div class="btnPay">{url}<a href="javascript:;" class="culPayOK">取消</a></div></div>';
+        $.getJSON(lanh.apiHost + "service/order_info/pay_method.html?order_id=" + id + "&front_url=" + encodeURIComponent(url), function (result) {
+            if (result.status == 0) {
+                if (result.pay_service_name == 'wxpay') {
+                    url = '<span><a href="/order/wx_pay?order_id=' + id + '&pic=' + encodeURIComponent(result.data) + '" target="_blank" class="PayOK" style="color:#fff;">确定</a></span>'
+                } else if (result.pay_service_name == 'alipay') {
+                    var herf = $(result.data).attr("onclick");
+                    herf = herf.replace("window.open('", "").replace("')", "");
+                    url = '<span><a href="' + herf + '" target="_blank" class="PayOK" style="color:#fff;">确定</a></span>'
+                } else if (result.pay_service_name == 'upop'){
+                    url = result.data;
+                }
+                $payHtml = $payHtml.replace('{url}', url)
+                lanh_modal.modal("温馨提示", $payHtml, 320, 150);
+                $('.pay_modal .pointer.pay_btn').val('确认');
+            } else{
+                lanh_modal.alert(result.msg);
+            }
+        });
+        $(document).off("click").on("click", "", function () {
+            lanh_modal.modalClose();
+        })
+    }
+})(jQuery);

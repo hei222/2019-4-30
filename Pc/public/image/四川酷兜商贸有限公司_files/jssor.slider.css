@@ -1,0 +1,226 @@
+﻿
+/*幻灯片缩略图--------------------------------*/
+/*jssorThumb01*/
+.jssorThumb01 {
+    position: relative;
+    margin: 0 auto;
+    top: 0px;
+    left: 0px;
+    width: 400px;
+    height: 500px;
+    overflow: hidden;
+    visibility: hidden;
+    background-color: rgb(242, 242, 242);
+}
+.jssorThumb01 .img01 {
+    cursor: default;
+    position: relative;
+    top: 0px;
+    left: 0px;
+    width: 400px;
+    height: 400px;
+    overflow: hidden;
+}
+.jssorThumb01 .thumb01 {
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    width: 400px;
+    height: 100px;
+}
+.jssorThumb01 .thumb01 .p {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 70px;
+    height: 70px;
+}
+.jssorThumb01 .thumb01 .t {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+.jssorThumb01 .thumb01 .w {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+}
+.jssorThumb01 .thumb01 .c {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 70px;
+    height: 70px;
+    /*border: #000 2px solid;*/
+    /*box-sizing: content-box;*/
+    /*background: url('/public/bower_components/jssor-slider/img/t01.png') -800px -800px no-repeat;*/
+    _background: none;
+}
+.jssorThumb01 .thumb01 .pav .c {
+    /*top: 2px;
+    _top: 0px;
+    left: 2px;
+    _left: 0px;*/
+    width: 70px;
+    height: 70px;
+    border: #e4393c 2px solid;
+    _border: #e4393c 2px solid;
+    background-position: 50% 50%;
+}    
+.jssorThumb01 .thumb01 .p:hover .c {
+    top: 0px;
+    left: 0px;
+    width: 70px;
+    height: 70px;
+    border: #e4393c 2px solid;
+    background-position: 50% 50%;
+}
+.jssorThumb01 .thumb01 .p.pdn .c {
+    background-position: 50% 50%;
+    width: 70px;
+    height: 70px;
+    /*border: #000 2px solid;*/
+} 
+* html .jssort01 .c, * html .jssort01 .pdn .c, * html .jssort01 .pav .c {
+    /* ie quirks mode adjust */
+    width /**/: 70px;
+    height /**/: 70px;
+}
+        
+
+/*幻灯片箭头，圆点--------------------------------*/
+.carousel-container .carousel-navigator {
+    position: absolute;
+}
+/*a01*/
+.carousel-container .carousel-navigator.a01.left,
+.carousel-container .carousel-navigator.a01.right {
+    display: block;
+    width: 45px;
+    height: 45px;
+    cursor: pointer;
+    background: url(/public/bower_components/jssor-slider/img/a01.png) center center no-repeat;
+    overflow: hidden;
+}
+.carousel-container .carousel-navigator.a01.left {
+    background-position: -8px -38px;
+    /*top: 123px;*/
+    left: 8px;
+}
+.carousel-container .carousel-navigator.a01.left:hover {
+    background-position: -128px -38px;
+}
+.carousel-container .carousel-navigator.a21.left.carousel-navigatordn {
+    background-position: -248px -38px;
+}
+.carousel-container .carousel-navigator.a01.right {
+    background-position: -68px -38px;
+    /*top: 123px;*/
+    right: 8px;
+}
+.carousel-container .carousel-navigator.a01.right:hover {
+    background-position: -188px -38px;
+}
+ .carousel-container .carousel-navigator.a01.right.carousel-navigatordn {
+    background-position: -308px -38px;
+}
+
+ /*a03*/
+.carousel-container .carousel-navigator.a03.left,
+.carousel-container .carousel-navigator.a03.right {
+    display: block;
+    width: 45px;
+    height: 45px;
+    cursor: pointer;
+    background: url(/public/bower_components/jssor-slider/img/a03.png) center center no-repeat;
+    overflow: hidden;
+}
+.carousel-container .carousel-navigator.a03.left {
+    background-position: -8px -38px;
+    /*top: 123px;*/
+    left: 8px;
+}
+.carousel-container .carousel-navigator.a03.left:hover {
+    background-position: -128px -38px;
+}
+.carousel-container .carousel-navigator.a03.left.carousel-navigatordn {
+    background-position: -248px -38px;
+}
+.carousel-container .carousel-navigator.a03.right {
+    background-position: -68px -38px;
+    /*top: 123px;*/
+    right: 8px;
+}
+.carousel-container .carousel-navigator.a15.right:hover {
+    background-position: -188px -38px;
+}
+ .carousel-container .carousel-navigator.a15.right.carousel-navigatordn {
+    background-position: -308px -38px;
+}
+
+/*b02*/
+.carousel-container .carousel-navigator.b02 {
+    bottom: 16px;
+    right: 6px;
+}
+.carousel-container .carousel-navigator.b02 div, 
+.carousel-container .carousel-navigator.b02 div:hover,
+.carousel-container .carousel-navigator.b02 .av {
+    width: 21px;
+    height: 21px;
+    background: url(/public/bower_components/jssor-slider/img/b02.png) no-repeat;
+    overflow: hidden;
+    cursor: pointer;
+}
+.carousel-container .carousel-navigator.b02 div {
+    background-position: -5px -5px;
+    }
+.carousel-container .carousel-navigator.b02 div:hover,
+.carousel-container .carousel-navigator.b02 .av:hover {
+    background-position: -35px -5px;
+}
+.carousel-container .carousel-navigator.b02 .av {
+    background-position: -68px -5px;
+}
+.carousel-container .carousel-navigator.b02 .dn,
+.carousel-container .carousel-navigator.b02 .dn:hover {
+    background-position: -99px -5px;
+}
+
+/*b12*/
+.carousel-container .carousel-navigator.b12 {
+    bottom: 15px;
+    right: 6px;
+}
+.carousel-container .carousel-navigator.b12 div, 
+.carousel-container .carousel-navigator.b12 div:hover,
+.carousel-container .carousel-navigator.b12 .av {
+    width: 12px;
+    height: 12px;
+    /*background: url(/public/bower_components/jssor-slider/img/b12.png) no-repeat;*/
+    overflow: hidden;
+    cursor: pointer;
+    border-radius:12px;
+}
+.carousel-container .carousel-navigator.b12 div {
+    /*background-position: -5px -5px;*/
+    background-color:#eee;
+    }
+.carousel-container .carousel-navigator.b12 div:hover,
+.carousel-container .carousel-navigator.b12 .av:hover {
+    /*background-position: -35px -5px;*/
+    background-color:#E5514d;
+}
+.carousel-container .carousel-navigator.b12 .av {
+    /*background-position: -68px -5px;*/
+    background-color:#E5514d;
+}
+/*.carousel-container .carousel-navigator.b12 .dn,
+.carousel-container .carousel-navigator.b12 .dn:hover {
+    background-position: -99px -5px;
+}*/

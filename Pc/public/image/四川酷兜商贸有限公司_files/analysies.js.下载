@@ -1,0 +1,40 @@
+﻿/*kshop global api*/
+(function () {
+    $(function () {
+        var paotData={
+            "referer_url": document.referrer,       //来源路径
+            "access_url": window.location.href,     //当前访问路径
+            "goods_id": window.location.pathname == "/product/detail" ? getUrlParam("goodsId") : null,   //访问产品详情页面传商品ID
+            "distributer_is_spread":getUrlParam("distributer_is_spread")?getUrlParam("distributer_is_spread"):0,
+            "distributer_id": (function(){
+                var distributer_id =0;
+                if(getUrlParam("distributer_id")){
+                    distributer_id=getUrlParam("distributer_id");
+                }else if(getUrlParam("distributerId")){
+                    distributer_id=getUrlParam("distributerId");
+                }
+                return distributer_id;
+            })()  //分销员ID  
+        }
+        //统计日志数据收录接口
+        $.post(lanh.apiHost + "service/shop_visit_logs/stat_visit.html", JSON.stringify(paotData), function (result) {
+            window.onbeforeunload = function () {
+                $.ajax({
+                    url: lanh.apiHost + "service/shop_visit_logs/visit_time.html",
+                    data: JSON.stringify({
+                        "access_url": window.location.href  //当前访问路径
+                    }),
+                    dataType: "json",
+                    async: false,
+                    type: "POST",
+                    success: function (result) {
+
+                    }
+                });
+                //$.post(lanh.apiHost + "service/shop_visit_logs/visit_time.html", JSON.stringify({
+                //    "access_url": window.location.href  //当前访问路径
+                //}), "json");
+            }
+        }, "json");
+    })
+})();

@@ -1,0 +1,11 @@
+﻿.ui-tips {
+            background: rgba(0, 0, 0, .5);
+            color: #fff;
+        }
+        .ui-vali-err{
+            color: #d10311;     
+        }
+        .vali-err{
+            border: 1px solid #d10311;
+            box-shadow: 0 0 5px #d10311;
+        }
